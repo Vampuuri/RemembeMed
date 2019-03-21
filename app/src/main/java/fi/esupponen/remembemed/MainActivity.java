@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent alarmIntent;
 
+    /**
     public int millisToAlarm(int currentH, int alarmH, int currentM, int alarmM) {
         int currentInMinutes = currentH * 60 + currentM;
         int alarmInMinutes = alarmH * 60 + alarmM;
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity", "hour: " + currentHour + " min: " + currentMin);
         Log.d("MainActivity", "millisToAlarm: " + millisToAlarm(currentHour, hour, currentMin, minute));
-    }
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, millisToAlarm(currentHour, hour, currentMin, minute), alarmIntent);
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setExampleAlarm(21,0);
+        //setExampleAlarm(20,55);
     }
 }
