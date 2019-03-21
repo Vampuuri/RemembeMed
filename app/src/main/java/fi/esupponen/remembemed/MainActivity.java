@@ -16,6 +16,19 @@ public class MainActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent alarmIntent;
 
+    public int millisToAlarm(int currentH, int alarmH, int currentM, int alarmM) {
+        int currentInMinutes = currentH * 60 + currentM;
+        int alarmInMinutes = alarmH * 60 + alarmM;
+
+        if (currentInMinutes < alarmInMinutes) {
+            return (alarmInMinutes - currentInMinutes) * 60000;
+        } else if (currentInMinutes > alarmInMinutes) {
+            return 24*60*60000 - (currentInMinutes - alarmInMinutes);
+        } else {
+            return 0;
+        }
+    }
+
     public void setExampleAlarm(int hour, int minute) {
         alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
@@ -27,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         int currentMin = now.getMinutes();
 
         Log.d("MainActivity", "hour: " + currentHour + " min: " + currentMin);
+        Log.d("MainActivity", "millisToAlarm: " + millisToAlarm(currentHour, hour, currentMin, minute));
     }
 
     @Override
@@ -36,6 +50,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setExampleAlarm(0,0);
+        setExampleAlarm(21,0);
     }
 }
