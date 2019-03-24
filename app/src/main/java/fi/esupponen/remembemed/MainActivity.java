@@ -22,7 +22,9 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         doseEdit.setText("");
 
         refreshListView();
+        writeJsonFile();
     }
 
     public void readInfoFromFile() {
@@ -176,6 +179,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             Writer output = null;
             File file = new File(this.getFilesDir(), "info.json");
+
+            if (file.isDirectory()) {
+                file.delete();
+            }
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(jsonObject.toString());
+            output.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
