@@ -55,19 +55,23 @@ public class MainActivity extends AppCompatActivity {
         medications.add(new Medication("burana", "puolikas"));
         medications.add(new Medication("aspiriini", "seitsemäntoista"));
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        refreshListView();
+
+        //setExampleAlarm(20,55);
+    }
+
+    private void refreshListView() {
         Medication[] medicationsArray = new Medication[medications.size()];
 
         for (int i = 0; i < medications.size(); i++) {
             medicationsArray[i] = medications.get(i);
         }
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         ListView list = (ListView) findViewById(R.id.listView);
         MedicationArrayAdapter arrayAdapter = new MedicationArrayAdapter(this, medicationsArray);
         list.setAdapter(arrayAdapter);
-
-        //setExampleAlarm(20,55);
     }
 }
