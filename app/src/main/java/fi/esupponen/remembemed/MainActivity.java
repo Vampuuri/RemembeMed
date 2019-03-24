@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -66,9 +68,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         medications = new ArrayList<>();
-        medications.add(new Medication("panadol", "kokonainen"));
-        medications.add(new Medication("burana", "puolikas"));
-        medications.add(new Medication("aspiriini", "seitsemäntoista"));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -131,7 +130,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void readInfoFromFile() {
+        String jsonString = readJsonStringFromFile();
 
+        try {
+            JSONObject json = new JSONObject(jsonString);
+            JSONArray medicationArray = json.getJSONArray("medications");
+
+            for (int i = 0; i < medicationArray.length(); i++) {
+                JSONObject medObject = medicationArray.getJSONObject(i);
+                String name = medObject.getString("name");
+                String dose = medObject.getString("dose");
+
+                medications.add(new Medication(name, dose));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String readJsonStringFromFile() {
