@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,12 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -74,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        readInfoFromFile();
         refreshListView();
 
         //setExampleAlarm(20,55);
@@ -120,5 +128,34 @@ public class MainActivity extends AppCompatActivity {
         doseEdit.setText("");
 
         refreshListView();
+    }
+
+    public void readInfoFromFile() {
+
+    }
+
+    public String readJsonStringFromFile() {
+        InputStream infoInput = this.getResources().openRawResource(R.raw.info);
+        Writer writer = new StringWriter();
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(infoInput, "UTF-8"));
+            String line = reader.readLine();
+
+            while (line != null) {
+                writer.write(line);
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                infoInput.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return writer.toString();
     }
 }
