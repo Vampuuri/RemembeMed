@@ -16,7 +16,7 @@ public class MedicationArrayAdapter extends ArrayAdapter {
     private Medication[] medications;
 
     public MedicationArrayAdapter(Activity context, Medication[] medications) {
-        super(context, R.layout.list_item);
+        super(context, R.layout.list_item, new String[medications.length]);
         this.context = context;
         this.medications = medications;
     }
