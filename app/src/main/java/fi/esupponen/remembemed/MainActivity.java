@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
             medications.add(new Medication(nameText, doseText));
         }
 
+        nameEdit.setText("");
+        doseEdit.setText("");
+
         refreshListView();
     }
 }
