@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         Writer writer = new StringWriter();
 
         try {
-            InputStream infoInput = this.getAssets().open("file_name.json");
+            InputStream infoInput = this.getAssets().open("info.json");
             BufferedReader reader = new BufferedReader(new InputStreamReader(infoInput, "UTF-8"));
             String line = reader.readLine();
 
@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Log.d("readJson", writer.toString());
         return writer.toString();
     }
 }
