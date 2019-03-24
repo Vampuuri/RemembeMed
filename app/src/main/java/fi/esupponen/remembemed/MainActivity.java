@@ -4,13 +4,19 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -60,9 +66,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ListView list = (ListView) findViewById(R.id.listView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setTaken(view, position, id);
+            }
+        });
+
         refreshListView();
 
         //setExampleAlarm(20,55);
+    }
+
+    public void setTaken(View view, int position, long id) {
+        TextView titleView = (TextView) view.findViewById(R.id.medicineTitle);
+
+        if (titleView.getPaintFlags() == 1281) {
+            titleView.setPaintFlags(titleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            titleView.setPaintFlags(1281);
+        }
+
+        Log.d("setTaken", titleView.getText().toString());
     }
 
     private void refreshListView() {
