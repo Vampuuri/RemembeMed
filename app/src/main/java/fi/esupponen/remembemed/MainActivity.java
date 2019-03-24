@@ -169,4 +169,27 @@ public class MainActivity extends AppCompatActivity {
         Log.d("readJson", writer.toString());
         return writer.toString();
     }
+
+    public void writeJsonFile() {
+
+    }
+
+    public JSONObject makeJsonObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            JSONArray array = new JSONArray();
+
+            for (Medication med : medications) {
+                JSONObject medObject = new JSONObject();
+                medObject.put("name", med.getName());
+                medObject.put("dose", med.getDose());
+                array.put(medObject);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+    }
 }
