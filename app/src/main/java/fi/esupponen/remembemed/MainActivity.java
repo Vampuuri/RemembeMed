@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.sql.Time;
@@ -73,5 +75,21 @@ public class MainActivity extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.listView);
         MedicationArrayAdapter arrayAdapter = new MedicationArrayAdapter(this, medicationsArray);
         list.setAdapter(arrayAdapter);
+    }
+
+    public void addNewMedication(View v) {
+        EditText nameEdit = (EditText) findViewById(R.id.editName);
+        EditText doseEdit = (EditText) findViewById(R.id.editDose);
+
+        String nameText = nameEdit.getText().toString();
+        String doseText = doseEdit.getText().toString();
+
+        if (nameText == null || doseText == null || nameText.equals("") || nameText.equals("")) {
+            Log.d("addNewMedication", "empty field");
+        } else {
+            medications.add(new Medication(nameText, doseText));
+        }
+
+        refreshListView();
     }
 }
