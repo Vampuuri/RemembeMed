@@ -24,4 +24,8 @@ public class Medication {
     public void setDose(String dose) {
         this.dose = dose;
     }
+
+    public String toString() {
+        return "Medication: " + name + " " + dose;
+    }
 }
