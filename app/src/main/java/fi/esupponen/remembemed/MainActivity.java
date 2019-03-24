@@ -24,9 +24,11 @@ import org.w3c.dom.Text;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.Time;
@@ -177,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
         JSONObject jsonObject = makeJsonObject();
 
         try {
-            Writer output = null;
             File file = new File(this.getFilesDir(), "info.json");
 
             if (file.isDirectory()) {
@@ -188,10 +189,9 @@ public class MainActivity extends AppCompatActivity {
                 file.createNewFile();
             }
 
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(jsonObject.toString());
-            output.close();
-
+            FileOutputStream stream = new FileOutputStream(file);
+            stream.write(jsonObject.toString().getBytes());
+            stream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -209,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 medObject.put("dose", med.getDose());
                 array.put(medObject);
             }
+
+            jsonObject.put("medications", array);
         } catch (Exception e) {
             e.printStackTrace();
         }
