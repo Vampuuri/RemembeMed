@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -49,9 +51,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         medications = new ArrayList<>();
+        medications.add(new Medication("panadol", "kokonainen"));
+        medications.add(new Medication("burana", "puolikas"));
+        medications.add(new Medication("aspiriini", "seitsemäntoista"));
+
+        Medication[] medicationsArray = new Medication[medications.size()];
+
+        for (int i = 0; i < medications.size(); i++) {
+            medicationsArray[i] = medications.get(i);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ListView list = (ListView) findViewById(R.id.listView);
+        MedicationArrayAdapter arrayAdapter = new MedicationArrayAdapter(this, medicationsArray);
+        list.setAdapter(arrayAdapter);
 
         //setExampleAlarm(20,55);
     }
