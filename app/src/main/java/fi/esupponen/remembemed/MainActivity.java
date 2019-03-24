@@ -149,10 +149,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String readJsonStringFromFile() {
-        InputStream infoInput = this.getResources().openRawResource(R.raw.info);
         Writer writer = new StringWriter();
 
         try {
+            InputStream infoInput = this.getAssets().open("file_name.json");
             BufferedReader reader = new BufferedReader(new InputStreamReader(infoInput, "UTF-8"));
             String line = reader.readLine();
 
@@ -160,14 +160,10 @@ public class MainActivity extends AppCompatActivity {
                 writer.write(line);
                 line = reader.readLine();
             }
+
+            infoInput.close();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                infoInput.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 
         return writer.toString();
