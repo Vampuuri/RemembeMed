@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void toMedicationInfo(View view, int position, long id) {
         Intent intent = new Intent(this, MedicineActivity.class);
+
+        intent.putExtra("medication", medications.get(position));
+
         startActivity(intent);
     }
 
