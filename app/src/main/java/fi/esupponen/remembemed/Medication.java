@@ -1,6 +1,8 @@
 package fi.esupponen.remembemed;
 
-public class Medication {
+import java.io.Serializable;
+
+public class Medication implements Serializable {
     String name;
     String dose;
 
