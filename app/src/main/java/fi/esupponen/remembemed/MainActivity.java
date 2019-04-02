@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setTaken(view, position, id);
+                toMedicationInfo(view, position, id);
             }
         });
 
@@ -90,16 +90,9 @@ public class MainActivity extends AppCompatActivity {
         //setExampleAlarm(20,55);
     }
 
-    public void setTaken(View view, int position, long id) {
-        TextView titleView = (TextView) view.findViewById(R.id.medicineTitle);
-
-        if (titleView.getPaintFlags() == 1281) {
-            titleView.setPaintFlags(titleView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            titleView.setPaintFlags(1281);
-        }
-
-        Log.d("setTaken", titleView.getText().toString());
+    public void toMedicationInfo(View view, int position, long id) {
+        Intent intent = new Intent(this, MedicineActivity.class);
+        startActivity(intent);
     }
 
     private void refreshListView() {
