@@ -2,10 +2,13 @@ package fi.esupponen.remembemed;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Paint;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuView;
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
     private AlarmManager alarmManager;
     private PendingIntent alarmIntent;
 
+    private BroadcastReceiver modifyDataReceiver;
+
     /**
     public int millisToAlarm(int currentH, int alarmH, int currentM, int alarmM) {
         int currentInMinutes = currentH * 60 + currentM;
@@ -69,6 +74,25 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         alarmManager.set(AlarmManager.RTC_WAKEUP, millisToAlarm(currentHour, hour, currentMin, minute), alarmIntent);
     }*/
 
+    private void registerModifyDataReceiver() {
+        modifyDataReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                MedicationRequest request = (MedicationRequest) intent.getExtras().getSerializable("request");
+
+                if (request.equals(MedicationRequest.UPDATE)) {
+                    Medication medication = (Medication) intent.getExtras().getSerializable("medication");
+                    int index = intent.getExtras().getInt("index");
+                    // updateData(index, medication);
+                } else if (request.equals(MedicationRequest.DELETE)) {
+                    Log.d("modifyDataReceiver", "delete");
+                }
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(modifyDataReceiver, new IntentFilter("modify-data"));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         medications = new ArrayList<>();
@@ -84,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
             }
         });
 
+        registerModifyDataReceiver();
+
         readInfoFromFile();
         refreshListView();
 
@@ -95,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         super.onResume();
 
         refreshListView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(modifyDataReceiver);
+        super.onDestroy();
     }
 
     public void toMedicationInfo(View view, int position, long id) {
