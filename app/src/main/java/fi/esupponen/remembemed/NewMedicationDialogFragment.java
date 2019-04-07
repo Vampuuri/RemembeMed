@@ -3,6 +3,7 @@ package fi.esupponen.remembemed;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class NewMedicationDialogFragment extends DialogFragment {
+
+    NewMedicationFragmentListener listener;
+
+    public interface NewMedicationFragmentListener {
+        void addNewMedication(String name, String dose);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstance) {
@@ -36,6 +43,17 @@ public class NewMedicationDialogFragment extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (NewMedicationFragmentListener) context;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
