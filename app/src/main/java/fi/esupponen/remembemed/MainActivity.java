@@ -82,6 +82,13 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         refreshListView();
     }
 
+    public void deleteData(int index) {
+        medications.remove(index);
+
+        writeJsonFile();
+        refreshListView();
+    }
+
     private void registerModifyDataReceiver() {
         modifyDataReceiver = new BroadcastReceiver() {
             @Override
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     updateData(index, medication);
                 } else if (request.equals(MedicationRequest.DELETE)) {
                     int index = intent.getExtras().getInt("index");
-                    // deleteData(index);
+                    deleteData(index);
                 }
             }
         };
