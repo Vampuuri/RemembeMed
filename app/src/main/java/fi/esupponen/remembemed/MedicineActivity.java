@@ -1,10 +1,13 @@
 package fi.esupponen.remembemed;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.icu.util.Calendar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,5 +80,20 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     @Override
     public void addAlarm(int hours, int minutes, double repeatAfterHour) {
         Log.d("MedicineActivity", hours + ":" + minutes + " repeat: " + repeatAfterHour);
+
+        AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hours);
+        calendar.set(Calendar.MINUTE, minutes);
+
+        if (repeatAfterHour == 0) {
+            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
+        } else {
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
+        }
     }
 }
