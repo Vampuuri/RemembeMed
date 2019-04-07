@@ -3,6 +3,7 @@ package fi.esupponen.remembemed;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,9 +36,19 @@ public class AlarmReceiver extends BroadcastReceiver {
             builder = new NotificationCompat.Builder(context);
         }
 
+        //Medication med = (Medication) intent.getSerializableExtra("medication");
+        //System.out.println(intent.getExtras().get("index"));
+        //System.out.println(intent.getExtras().get("medication"));
+        //Intent openIntent = new Intent(context, Medication.class);
+        //openIntent.putExtra("index", intent.getExtras().getInt("index"));
+        //openIntent.putExtra("medication", med);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, 0);
+
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentTitle("Time to take medication!");
-        builder.setContentText("Medication info here");
+        builder.setContentText("Medication information here when i get the intent to work");
+        //builder.setContentText(med.getName() + ": " + med.getDose());
+        //builder.setContentIntent(pendingIntent);
 
         Notification notification = builder.build();
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

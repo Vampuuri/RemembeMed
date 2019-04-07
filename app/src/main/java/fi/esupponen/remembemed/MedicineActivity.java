@@ -82,7 +82,12 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         Log.d("MedicineActivity", hours + ":" + minutes + " repeat: " + repeatAfterHour);
 
         AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
         Intent intent = new Intent(this, AlarmReceiver.class);
+        //intent.putExtra("index", index);
+        //intent.putExtra("medication", medication);
+        //intent.setAction("" + Math.random());
+
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         Calendar calendar = Calendar.getInstance();
