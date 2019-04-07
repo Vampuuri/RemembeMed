@@ -24,7 +24,8 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     }
 
     public void addNewAlarm(View v) {
-        Log.d("MedicineActivity", "Add alarm");
+        AddAlarmDialogFragment frag = new AddAlarmDialogFragment();
+        frag.show(getFragmentManager(), "addAlarmDialogFragment");
     }
 
     public void deleteMedication(View v) {
