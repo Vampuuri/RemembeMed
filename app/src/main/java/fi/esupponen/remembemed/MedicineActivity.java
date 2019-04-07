@@ -15,7 +15,10 @@ public class MedicineActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         medication = (Medication) b.getSerializable("medication");
 
-        TextView tv = (TextView) findViewById(R.id.textplace);
-        tv.setText(medication.getName());
+        TextView tvTitle = (TextView) findViewById(R.id.nameView);
+        tvTitle.setText(medication.getName());
+
+        TextView tvDosage = (TextView) findViewById(R.id.dosageView);
+        tvTitle.setText(medication.getName());
     }
 }
