@@ -59,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         refreshListView();
     }
 
+    public void addAlarmToMedication(int index, Alarm alarm) {
+        medications.get(index).getAlarms().add(alarm);
+    }
+
     private void registerModifyDataReceiver() {
         modifyDataReceiver = new BroadcastReceiver() {
             @Override
@@ -72,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 } else if (request.equals(MedicationRequest.DELETE)) {
                     int index = intent.getExtras().getInt("index");
                     deleteData(index);
+                } else if (request.equals(MedicationRequest.ADD_ALARM)) {
+                    Alarm alarm = (Alarm) intent.getExtras().getSerializable("alarm");
+                    int index = intent.getExtras().getInt("index");
+                    addAlarmToMedication(index, alarm);
                 }
             }
         };
