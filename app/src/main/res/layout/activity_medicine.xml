@@ -22,7 +22,8 @@
             android:layout_height="17pt"
             android:textAllCaps="false"
             android:textSize="5pt"
-            android:text="Edit"/>
+            android:text="Edit"
+            android:onClick="editMedicineName"/>
     </TableRow>
 
     <TableRow>
@@ -42,7 +43,8 @@
             android:layout_height="17pt"
             android:textAllCaps="false"
             android:textSize="5pt"
-            android:text="Edit"/>
+            android:text="Edit"
+            android:onClick="editMedicineDose"/>
     </TableRow>
 
     <TableRow>
@@ -63,7 +65,8 @@
             android:layout_height="17pt"
             android:textAllCaps="false"
             android:textSize="5pt"
-            android:text="Add"/>
+            android:text="Add"
+            android:onClick="addNewAlarm"/>
     </TableRow>
 
     <ListView
@@ -79,5 +82,6 @@
         android:layout_height="wrap_content"
         android:text="Delete this medication"
         android:textAllCaps="false"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="deleteMedication"/>
 </TableLayout>
