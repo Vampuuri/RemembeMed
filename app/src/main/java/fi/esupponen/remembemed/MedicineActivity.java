@@ -28,7 +28,13 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     }
 
     public void deleteMedication(View v) {
-        Log.d("MedicineActivity", "Delete medication");
+        // TODO: dialog for making sure, that user really wants to delete medication
+        Intent intent = new Intent("modify-data");
+        intent.putExtra("request", MedicationRequest.DELETE);
+        intent.putExtra("index", index);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+        super.finish();
     }
 
     @Override
