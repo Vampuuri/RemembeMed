@@ -39,8 +39,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NewMedicationDialogFragment.NewMedicationFragmentListener {
     private ArrayList<Medication> medications;
-    private AlarmManager alarmManager;
-    private PendingIntent alarmIntent;
 
     private BroadcastReceiver modifyDataReceiver;
 
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 } else if (request.equals(MedicationRequest.ADD_ALARM)) {
                     Alarm alarm = (Alarm) intent.getExtras().getSerializable("alarm");
                     int index = intent.getExtras().getInt("index");
+                    System.out.println(index);
                     addAlarmToMedication(index, alarm);
                 }
             }
@@ -124,9 +123,8 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
     public void toMedicationInfo(View view, int position, long id) {
         Intent intent = new Intent(this, MedicineActivity.class);
-
         intent.putExtra("medication", medications.get(position));
-
+        intent.putExtra("index", position);
         startActivity(intent);
     }
 
