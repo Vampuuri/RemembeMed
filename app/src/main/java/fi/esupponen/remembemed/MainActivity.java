@@ -90,6 +90,13 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         //setExampleAlarm(20,55);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        refreshListView();
+    }
+
     public void toMedicationInfo(View view, int position, long id) {
         Intent intent = new Intent(this, MedicineActivity.class);
 
