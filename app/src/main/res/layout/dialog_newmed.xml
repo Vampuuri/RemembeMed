@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/newMedTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Add new medication"
+        android:textSize="12pt"
+        android:layout_marginVertical="10pt"
+        android:layout_marginHorizontal="15pt"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Medicine name"/>
+
+    <EditText
+        android:id="@+id/newMedName"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10pt"
+        android:layout_marginBottom="8pt"
+        android:inputType="text"
+        android:hint="Name"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Medicine dose"/>
+
+    <EditText
+        android:id="@+id/newMedDose"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10pt"
+        android:inputType="text"
+        android:hint="Dose"/>
+</LinearLayout>
