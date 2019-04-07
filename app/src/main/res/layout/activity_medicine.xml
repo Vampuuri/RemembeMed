@@ -50,7 +50,7 @@
 
         <TableRow>
             <TextView
-                android:id="@+id/alertsView"
+                android:id="@+id/alarmsView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,10 +58,10 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="10dp"
                 android:textSize="10pt"
-                android:text="Alerts"/>
+                android:text="Alarms"/>
 
             <Button
-                android:id="@+id/addAlertButton"
+                android:id="@+id/addAlarmButton"
                 android:layout_width="wrap_content"
                 android:layout_height="15pt"
                 android:textAllCaps="false"
@@ -70,7 +70,7 @@
         </TableRow>
 
         <ListView
-            android:id="@+id/alertsList"
+            android:id="@+id/alarmsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
