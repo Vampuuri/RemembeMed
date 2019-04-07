@@ -166,8 +166,10 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 JSONObject medObject = medicationArray.getJSONObject(i);
                 String name = medObject.getString("name");
                 String dose = medObject.getString("dose");
+                Boolean taken = medObject.getBoolean("taken");
 
                 Medication newMed = new Medication(name, dose);
+                newMed.setDoseTaken(taken);
 
                 JSONArray alarmArray = medObject.getJSONArray("alarms");
 
@@ -243,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 JSONObject medObject = new JSONObject();
                 medObject.put("name", med.getName());
                 medObject.put("dose", med.getDose());
+                medObject.put("taken", med.getDoseTaken());
 
                 JSONArray alarmArray = new JSONArray();
 
