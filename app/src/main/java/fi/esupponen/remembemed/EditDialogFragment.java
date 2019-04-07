@@ -17,7 +17,7 @@ public class EditDialogFragment extends DialogFragment {
     EditDialogListener listener;
 
     public interface EditDialogListener {
-        void updateEditedDialog(String field, String updatedInfo);
+        void updateEditedDialog(MedicationRequest request, String updatedInfo);
     }
 
     public static EditDialogFragment getInstance(Medication medication, MedicationRequest request) {
@@ -42,7 +42,7 @@ public class EditDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         Medication med = (Medication) args.getSerializable("medication");
-        MedicationRequest request = (MedicationRequest) args.getSerializable("request");
+        final MedicationRequest request = (MedicationRequest) args.getSerializable("request");
         final String field = args.getString("field");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -61,7 +61,7 @@ public class EditDialogFragment extends DialogFragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.updateEditedDialog(field, ((EditText)layout.findViewById(R.id.editFragmentText)).getText().toString());
+                    listener.updateEditedDialog(request, ((EditText)layout.findViewById(R.id.editFragmentText)).getText().toString());
                 }
             })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

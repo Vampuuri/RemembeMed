@@ -44,11 +44,11 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     }
 
     @Override
-    public void updateEditedDialog(String field, String updatedInfo) {
-        if (field.equals("name")) {
+    public void updateEditedDialog(MedicationRequest request, String updatedInfo) {
+        if (request.equals(MedicationRequest.CHANGE_NAME) && !updatedInfo.equals("")) {
             medication.setName(updatedInfo);
             ((TextView)findViewById(R.id.nameView)).setText(updatedInfo);
-        } else {
+        } else if (request.equals(MedicationRequest.CHANGE_DOSE) && !updatedInfo.equals("")) {
             medication.setDose(updatedInfo);
             ((TextView)findViewById(R.id.dosageView)).setText(updatedInfo);
         }
