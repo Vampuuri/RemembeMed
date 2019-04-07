@@ -1,12 +1,13 @@
 package fi.esupponen.remembemed;
 
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class MedicineActivity extends AppCompatActivity {
+public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener {
     Medication medication;
 
     public void editMedicineName(View v) {
@@ -39,6 +40,19 @@ public class MedicineActivity extends AppCompatActivity {
         tvTitle.setText(medication.getName());
 
         TextView tvDosage = (TextView) findViewById(R.id.dosageView);
-        tvTitle.setText(medication.getName());
+        tvDosage.setText(medication.getDose());
+    }
+
+    @Override
+    public void updateEditedDialog(String field, String updatedInfo) {
+        if (field.equals("name")) {
+            medication.setName(updatedInfo);
+            ((TextView)findViewById(R.id.nameView)).setText(updatedInfo);
+        } else {
+            medication.setDose(updatedInfo);
+            ((TextView)findViewById(R.id.dosageView)).setText(updatedInfo);
+        }
+
+        Log.d("MedicineActivity", "update info " + medication.toString());
     }
 }
