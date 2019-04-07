@@ -9,12 +9,14 @@ import java.util.stream.Stream;
 public class Medication implements Serializable {
     String name;
     String dose;
+    Boolean doseTaken;
     LinkedList<Alarm> alarms;
 
     public Medication(String name, String dose) {
         this.name = name;
         this.dose = dose;
         this.alarms = new LinkedList<>();
+        doseTaken = false;
     }
 
     public String getName() {
@@ -39,5 +41,13 @@ public class Medication implements Serializable {
 
     public LinkedList<Alarm> getAlarms() {
         return alarms;
+    }
+
+    public Boolean getDoseTaken() {
+        return doseTaken;
+    }
+
+    public void setDoseTaken(Boolean doseTaken) {
+        this.doseTaken = doseTaken;
     }
 }
