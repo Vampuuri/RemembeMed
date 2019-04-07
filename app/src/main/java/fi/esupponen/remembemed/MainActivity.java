@@ -74,6 +74,14 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         alarmManager.set(AlarmManager.RTC_WAKEUP, millisToAlarm(currentHour, hour, currentMin, minute), alarmIntent);
     }*/
 
+    public void updateData(int index, Medication updatedData) {
+        medications.get(index).setName(updatedData.getName());
+        medications.get(index).setDose(updatedData.getDose());
+
+        writeJsonFile();
+        refreshListView();
+    }
+
     private void registerModifyDataReceiver() {
         modifyDataReceiver = new BroadcastReceiver() {
             @Override
@@ -83,9 +91,10 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 if (request.equals(MedicationRequest.UPDATE)) {
                     Medication medication = (Medication) intent.getExtras().getSerializable("medication");
                     int index = intent.getExtras().getInt("index");
-                    // updateData(index, medication);
+                    updateData(index, medication);
                 } else if (request.equals(MedicationRequest.DELETE)) {
-                    Log.d("modifyDataReceiver", "delete");
+                    int index = intent.getExtras().getInt("index");
+                    // deleteData(index);
                 }
             }
         };
