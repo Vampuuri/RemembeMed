@@ -10,7 +10,8 @@ public class MedicineActivity extends AppCompatActivity {
     Medication medication;
 
     public void editMedicineName(View v) {
-        Log.d("MedicineActivity", "Edit name");
+        EditDialogFragment frag = EditDialogFragment.getInstance();
+        frag.show(getFragmentManager(), "dialog");
     }
 
     public void editMedicineDose(View v) {
