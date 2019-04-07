@@ -47,12 +47,13 @@
             android:onClick="editMedicineDose"/>
     </TableRow>
 
-    <RadioButton
-        android:id="@+id/doseTakenRadioButton"
+    <CheckBox
+        android:id="@+id/doseTakenCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10pt"
-        android:text="Check if you have taken your dose"/>
+        android:text="Check if you have taken your dose"
+        android:onClick="updateTakenStatus"/>
 
     <TableRow>
         <TextView
