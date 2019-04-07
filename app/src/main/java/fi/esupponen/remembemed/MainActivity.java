@@ -34,7 +34,7 @@ import java.io.Writer;
 import java.sql.Time;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NewMedicationDialogFragment.NewMedicationFragmentListener {
     private ArrayList<Medication> medications;
     private AlarmManager alarmManager;
     private PendingIntent alarmIntent;
@@ -111,23 +111,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addNewMedication(View v) {
-        EditText nameEdit = (EditText) findViewById(R.id.editName);
-        EditText doseEdit = (EditText) findViewById(R.id.editDose);
-
-        String nameText = nameEdit.getText().toString();
-        String doseText = doseEdit.getText().toString();
-
-        if (nameText == null || doseText == null || nameText.equals("") || nameText.equals("")) {
-            Log.d("addNewMedication", "empty field");
-        } else {
-            medications.add(new Medication(nameText, doseText));
-        }
-
-        nameEdit.setText("");
-        doseEdit.setText("");
-
-        refreshListView();
-        writeJsonFile();
+        NewMedicationDialogFragment dialog = new NewMedicationDialogFragment();
+        dialog.show(getFragmentManager(), "newMedicationDialog");
     }
 
     public void readInfoFromFile() {
@@ -212,5 +197,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return jsonObject;
+    }
+
+    @Override
+    public void addNewMedication(String name, String dose) {
+        if (name == null || dose == null || name.equals("") || name.equals("")) {
+            Log.d("addNewMedication", "empty field");
+            // Implement warning later
+        } else {
+            Medication newMed = new Medication(name, dose);
+            medications.add(newMed);
+            writeJsonFile();
+            refreshListView();
+
+            Intent intent = new Intent(this, MedicineActivity.class);
+            intent.putExtra("medication", newMed);
+            startActivity(intent);
+        }
     }
 }
