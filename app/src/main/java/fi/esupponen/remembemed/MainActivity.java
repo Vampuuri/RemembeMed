@@ -44,36 +44,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
     private BroadcastReceiver modifyDataReceiver;
 
-    /**
-    public int millisToAlarm(int currentH, int alarmH, int currentM, int alarmM) {
-        int currentInMinutes = currentH * 60 + currentM;
-        int alarmInMinutes = alarmH * 60 + alarmM;
-
-        if (currentInMinutes < alarmInMinutes) {
-            return (alarmInMinutes - currentInMinutes) * 60000;
-        } else if (currentInMinutes > alarmInMinutes) {
-            return 24*60*60000 - (currentInMinutes - alarmInMinutes);
-        } else {
-            return 0;
-        }
-    }
-
-    public void setExampleAlarm(int hour, int minute) {
-        alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-
-        Time now = new Time(System.currentTimeMillis());
-
-        int currentHour = now.getHours();
-        int currentMin = now.getMinutes();
-
-        Log.d("MainActivity", "hour: " + currentHour + " min: " + currentMin);
-        Log.d("MainActivity", "millisToAlarm: " + millisToAlarm(currentHour, hour, currentMin, minute));
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, millisToAlarm(currentHour, hour, currentMin, minute), alarmIntent);
-    }*/
-
     public void updateData(int index, Medication updatedData) {
         medications.get(index).setName(updatedData.getName());
         medications.get(index).setDose(updatedData.getDose());
@@ -128,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
         readInfoFromFile();
         refreshListView();
-
-        //setExampleAlarm(20,55);
     }
 
     @Override
