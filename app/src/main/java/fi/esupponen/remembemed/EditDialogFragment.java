@@ -3,6 +3,7 @@ package fi.esupponen.remembemed;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class EditDialogFragment extends DialogFragment {
+
+    EditDialogListener listener;
+
+    public interface EditDialogListener {
+        void updateEditedDialog(String field, String updatedInfo);
+    }
+
     public static EditDialogFragment getInstance(Medication medication, String field) {
         EditDialogFragment frag = new EditDialogFragment();
         Bundle args = new Bundle();
@@ -26,12 +34,12 @@ public class EditDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         Medication med = (Medication) args.getSerializable("medication");
-        String field = args.getString("field");
+        final String field = args.getString("field");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View layout = inflater.inflate(R.layout.dialog_edit, null);
+        final View layout = inflater.inflate(R.layout.dialog_edit, null);
         ((TextView)layout.findViewById(R.id.editFragmentTitle)).setText("Edit " + field);
         if (field.equals("name")) {
             ((EditText)layout.findViewById(R.id.editFragmentText)).setHint(med.getName());
@@ -44,7 +52,7 @@ public class EditDialogFragment extends DialogFragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    listener.updateEditedDialog(field, ((EditText)layout.findViewById(R.id.editFragmentText)).getText().toString());
                 }
             })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -55,5 +63,16 @@ public class EditDialogFragment extends DialogFragment {
             });
 
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (EditDialogListener) context;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
