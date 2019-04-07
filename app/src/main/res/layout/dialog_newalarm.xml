@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orienation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/selectedTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10pt"
+            android:text="Selected time:"
+            android:layout_margin="10pt"/>
+
+        <Button
+            android:id="@+id/selectTimeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10pt"
+            android:text="change"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Repeat: "/>
+
+    <RadioButton
+        android:id="@+id/radioButtonNoRepeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="No repeat"/>
+
+    <RadioButton
+        android:id="@+id/radioButton12h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Twice a day (12h)"/>
+
+    <RadioButton
+        android:id="@+id/radioButton24h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Once a day (24h)"/>
+
+    <RadioButton
+        android:id="@+id/radioButton48h"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Once every two days (48h)"/>
+
+</LinearLayout>
