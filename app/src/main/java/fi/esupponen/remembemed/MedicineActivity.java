@@ -1,6 +1,8 @@
 package fi.esupponen.remembemed;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener {
     Medication medication;
+    int index;
 
     public void editMedicineName(View v) {
         EditDialogFragment frag = EditDialogFragment.getInstance(medication, MedicationRequest.CHANGE_NAME);
@@ -35,6 +38,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         Bundle b = getIntent().getExtras();
         medication = (Medication) b.getSerializable("medication");
+        index = b.getInt("index");
 
         TextView tvTitle = (TextView) findViewById(R.id.nameView);
         tvTitle.setText(medication.getName());
@@ -53,6 +57,10 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             ((TextView)findViewById(R.id.dosageView)).setText(updatedInfo);
         }
 
-        Log.d("MedicineActivity", "update info " + medication.toString());
+        Intent intent = new Intent("modify-data");
+        intent.putExtra("request", MedicationRequest.UPDATE);
+        intent.putExtra("index", index);
+        intent.putExtra("medication", medication);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
