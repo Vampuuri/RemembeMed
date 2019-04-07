@@ -17,5 +17,6 @@
         android:id="@+id/editFragmentText"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="10pt"/>
+        android:layout_marginHorizontal="10pt"
+        android:inputType="text"/>
 </LinearLayout>
