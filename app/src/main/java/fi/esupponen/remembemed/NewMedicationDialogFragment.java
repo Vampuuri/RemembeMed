@@ -33,7 +33,7 @@ public class NewMedicationDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = ((EditText)layout.findViewById(R.id.newMedName)).getText().toString();
-                String dose = ((EditText)layout.findViewById(R.id.newMedName)).getText().toString();
+                String dose = ((EditText)layout.findViewById(R.id.newMedDose)).getText().toString();
                 listener.addNewMedication(name, dose);
             }
         })
