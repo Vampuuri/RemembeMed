@@ -100,5 +100,8 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         } else {
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
         }
+
+        Alarm alarm = new Alarm(1, hours, minutes, (float)repeatAfterHour, true);
+        medication.getAlarms().add(alarm);
     }
 }
