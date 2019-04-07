@@ -13,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -47,6 +49,15 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         super.finish();
     }
 
+    public void updateTakenStatus(View v) {
+        medication.setDoseTaken(((CheckBox)v).isChecked());
+        Intent intent = new Intent("modify-data");
+        intent.putExtra("request", MedicationRequest.SET_TAKEN);
+        intent.putExtra("index", index);
+        intent.putExtra("taken", ((CheckBox)v).isChecked());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
     public void showAlarms() {
         List<Alarm> alarms = medication.getAlarms();
         Alarm[] alarmArray = new Alarm[alarms.size()];
@@ -74,6 +85,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         TextView tvDosage = (TextView) findViewById(R.id.dosageView);
         tvDosage.setText(medication.getDose());
+        ((CheckBox)findViewById(R.id.doseTakenCheckBox)).setChecked(medication.getDoseTaken());
 
         if (medication.getAlarms().size() > 0) {
             showAlarms();
