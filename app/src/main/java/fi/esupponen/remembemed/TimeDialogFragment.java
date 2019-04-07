@@ -10,6 +10,12 @@ import android.util.Log;
 import android.widget.TimePicker;
 
 public class TimeDialogFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+    AddAlarmDialogFragment parent;
+
+    public void setParent(AddAlarmDialogFragment parent) {
+        this.parent = parent;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar c = Calendar.getInstance();
@@ -21,6 +27,6 @@ public class TimeDialogFragment extends DialogFragment implements TimePickerDial
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Log.d("onTimeSet", hourOfDay + ":" + minute);
+        parent.setTime(hourOfDay, minute);
     }
 }
