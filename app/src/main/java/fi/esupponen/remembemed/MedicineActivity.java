@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener {
+public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener {
     Medication medication;
     int index;
 
@@ -72,5 +72,10 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         intent.putExtra("index", index);
         intent.putExtra("medication", medication);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    public void addAlarm(int hours, int minutes, double repeatAfterHour) {
+        Log.d("MedicineActivity", hours + ":" + minutes + " repeat: " + repeatAfterHour);
     }
 }
