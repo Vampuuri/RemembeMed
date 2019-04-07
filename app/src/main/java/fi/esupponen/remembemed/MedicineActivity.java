@@ -16,8 +16,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     Medication medication;
     int index;
 
-    private BroadcastReceiver addAlarmReceiver;
-
     public void editMedicineName(View v) {
         EditDialogFragment frag = EditDialogFragment.getInstance(medication, MedicationRequest.CHANGE_NAME);
         frag.show(getFragmentManager(), "editNameDialog");
@@ -43,17 +41,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         super.finish();
     }
 
-    private void registerAddAlarmReceiver() {
-        addAlarmReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d("addAlarmReceiver", "got the broadcast");
-            }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(addAlarmReceiver, new IntentFilter("add-alarm"));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +55,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         TextView tvDosage = (TextView) findViewById(R.id.dosageView);
         tvDosage.setText(medication.getDose());
-    }
-
-    @Override
-    protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(addAlarmReceiver);
-        super.onDestroy();
     }
 
     @Override
