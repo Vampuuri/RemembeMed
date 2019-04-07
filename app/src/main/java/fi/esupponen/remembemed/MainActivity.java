@@ -159,7 +159,21 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 String name = medObject.getString("name");
                 String dose = medObject.getString("dose");
 
-                medications.add(new Medication(name, dose));
+                Medication newMed = new Medication(name, dose);
+
+                JSONArray alarmArray = medObject.getJSONArray("alarms");
+
+                for (int j = 0; j < alarmArray.length(); j++) {
+                    JSONObject alarmObject = alarmArray.getJSONObject(j);
+                    int id = alarmObject.getInt("id");
+                    int hour = alarmObject.getInt("hour");
+                    int minute = alarmObject.getInt("minute");
+                    float hourToRepeat = (float)alarmObject.getLong("hourToRepeat");
+
+                    newMed.getAlarms().add(new Alarm(id, hour, minute, hourToRepeat, true));
+                }
+
+                medications.add(newMed);
             }
         } catch (Exception e) {
             e.printStackTrace();
