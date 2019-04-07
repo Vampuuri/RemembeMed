@@ -73,6 +73,7 @@
         android:id="@+id/alarmsList"
         android:layout_width="match_parent"
         android:layout_height="0pt"
+        android:layout_marginHorizontal="10pt"
         android:layout_weight="1">
     </ListView>
 
