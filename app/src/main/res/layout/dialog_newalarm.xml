@@ -32,32 +32,37 @@
         android:layout_marginHorizontal="10pt"
         android:text="Repeat: "/>
 
-    <RadioButton
-        android:id="@+id/radioButtonNoRepeat"
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10pt"
-        android:text="No repeat"/>
+        android:layout_height="wrap_content">
 
-    <RadioButton
-        android:id="@+id/radioButton12h"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10pt"
-        android:text="Twice a day (12h)"/>
+        <RadioButton
+            android:id="@+id/radioButtonNoRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10pt"
+            android:text="No repeat"/>
 
-    <RadioButton
-        android:id="@+id/radioButton24h"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10pt"
-        android:text="Once a day (24h)"/>
+        <RadioButton
+            android:id="@+id/radioButton12h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10pt"
+            android:text="Twice a day (12h)"/>
 
-    <RadioButton
-        android:id="@+id/radioButton48h"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10pt"
-        android:text="Once every two days (48h)"/>
+        <RadioButton
+            android:id="@+id/radioButton24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10pt"
+            android:text="Once a day (24h)"/>
+
+        <RadioButton
+            android:id="@+id/radioButton48h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10pt"
+            android:text="Once every two days (48h)"/>
+    </RadioGroup>
 
 </LinearLayout>
