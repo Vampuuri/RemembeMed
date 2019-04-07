@@ -11,12 +11,12 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     Medication medication;
 
     public void editMedicineName(View v) {
-        EditDialogFragment frag = EditDialogFragment.getInstance(medication, "name");
+        EditDialogFragment frag = EditDialogFragment.getInstance(medication, MedicationRequest.CHANGE_NAME);
         frag.show(getFragmentManager(), "editNameDialog");
     }
 
     public void editMedicineDose(View v) {
-        EditDialogFragment frag = EditDialogFragment.getInstance(medication, "dose");
+        EditDialogFragment frag = EditDialogFragment.getInstance(medication, MedicationRequest.CHANGE_DOSE);
         frag.show(getFragmentManager(), "editNameDialog");
     }
 

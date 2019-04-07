@@ -20,11 +20,18 @@ public class EditDialogFragment extends DialogFragment {
         void updateEditedDialog(String field, String updatedInfo);
     }
 
-    public static EditDialogFragment getInstance(Medication medication, String field) {
+    public static EditDialogFragment getInstance(Medication medication, MedicationRequest request) {
         EditDialogFragment frag = new EditDialogFragment();
         Bundle args = new Bundle();
-        args.putString("field", field);
+        args.putSerializable("request", request);
         args.putSerializable("medication", medication);
+
+        if (request.equals(MedicationRequest.CHANGE_NAME)) {
+            args.putString("field", "name");
+        } else if (request.equals(MedicationRequest.CHANGE_DOSE)) {
+            args.putString("field", "dose");
+        }
+
         frag.setArguments(args);
 
         return frag;
@@ -35,6 +42,7 @@ public class EditDialogFragment extends DialogFragment {
         Bundle args = getArguments();
 
         Medication med = (Medication) args.getSerializable("medication");
+        MedicationRequest request = (MedicationRequest) args.getSerializable("request");
         final String field = args.getString("field");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -42,7 +50,7 @@ public class EditDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View layout = inflater.inflate(R.layout.dialog_edit, null);
         ((TextView)layout.findViewById(R.id.editFragmentTitle)).setText("Edit " + field);
-        if (field.equals("name")) {
+        if (request.equals(MedicationRequest.CHANGE_NAME)) {
             ((EditText)layout.findViewById(R.id.editFragmentText)).setHint(med.getName());
         } else {
             ((EditText)layout.findViewById(R.id.editFragmentText)).setHint(med.getDose());
