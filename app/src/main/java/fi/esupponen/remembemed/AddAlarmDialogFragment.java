@@ -24,6 +24,10 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
     int minutes;
     double repeatAfterHour;
 
+    public interface AddAlarmDialogFragmentListener {
+        void addAlarm(int hours, int minutes, double repeatAfterHour);
+    }
+
     public void openSelectTimeFragment() {
         TimeDialogFragment frag = new TimeDialogFragment();
         frag.setParent(this);
