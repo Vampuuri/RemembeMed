@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
     public void addAlarmToMedication(int index, Alarm alarm) {
         medications.get(index).getAlarms().add(alarm);
+        writeJsonFile();
     }
 
     private void registerModifyDataReceiver() {
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
     public void writeJsonFile() {
         JSONObject jsonObject = makeJsonObject();
+        System.out.println(jsonObject.toString());
 
         try {
             File file = new File(this.getFilesDir(), "info.json");
@@ -219,6 +221,20 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 JSONObject medObject = new JSONObject();
                 medObject.put("name", med.getName());
                 medObject.put("dose", med.getDose());
+
+                JSONArray alarmArray = new JSONArray();
+
+                for (Alarm alarm : med.getAlarms()) {
+                    JSONObject alarmObject = new JSONObject();
+                    alarmObject.put("id", alarm.getId());
+                    alarmObject.put("hour", alarm.getHour());
+                    alarmObject.put("minute", alarm.getMinute());
+                    alarmObject.put("hourToRepeat", alarm.getHourToRepeat());
+
+                    alarmArray.put(alarmObject);
+                }
+
+                medObject.put("alarms", alarmArray);
                 array.put(medObject);
             }
 
