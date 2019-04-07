@@ -1,7 +1,10 @@
 package fi.esupponen.remembemed;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener {
     Medication medication;
     int index;
+
+    private BroadcastReceiver addAlarmReceiver;
 
     public void editMedicineName(View v) {
         EditDialogFragment frag = EditDialogFragment.getInstance(medication, MedicationRequest.CHANGE_NAME);
@@ -38,6 +43,17 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         super.finish();
     }
 
+    private void registerAddAlarmReceiver() {
+        addAlarmReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("addAlarmReceiver", "got the broadcast");
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(addAlarmReceiver, new IntentFilter("add-alarm"));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +68,12 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         TextView tvDosage = (TextView) findViewById(R.id.dosageView);
         tvDosage.setText(medication.getDose());
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(addAlarmReceiver);
+        super.onDestroy();
     }
 
     @Override
