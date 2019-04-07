@@ -1,14 +1,20 @@
 package fi.esupponen.remembemed;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Medication implements Serializable {
     String name;
     String dose;
+    LinkedList<Alarm> alarms;
 
     public Medication(String name, String dose) {
         this.name = name;
         this.dose = dose;
+        this.alarms = new LinkedList<>();
     }
 
     public String getName() {
@@ -29,5 +35,9 @@ public class Medication implements Serializable {
 
     public String toString() {
         return "Medication: " + name + " " + dose;
+    }
+
+    public LinkedList<Alarm> getAlarms() {
+        return alarms;
     }
 }
