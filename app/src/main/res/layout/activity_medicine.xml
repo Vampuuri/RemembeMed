@@ -5,37 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MedicineActivity">
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/nameView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="13pt"
-            android:text="Medicine name"/>
+        <TableRow>
+            <TextView
+                android:id="@+id/nameView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textSize="13pt"
+                android:text="Medicine name"/>
 
-        <TextView
-            android:id="@+id/dosageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:textSize="8pt"
-            android:text="Medicine dose"/>
+            <Button
+                android:id="@+id/modifyMedNameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="15pt"
+                android:textAllCaps="false"
+                android:textSize="5pt"
+                android:text="Edit"/>
+        </TableRow>
 
-        <TextView
-            android:id="@+id/alertsView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:textSize="10pt"
-            android:text="Alerts"/>
+        <TableRow>
+            <TextView
+                android:id="@+id/dosageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:textSize="8pt"
+                android:text="Medicine dose"/>
+
+            <Button
+                android:id="@+id/modifyDoseNameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="15pt"
+                android:textAllCaps="false"
+                android:textSize="5pt"
+                android:text="Edit"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/alertsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingHorizontal="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
+                android:textSize="10pt"
+                android:text="Alerts"/>
+
+            <Button
+                android:id="@+id/addAlertButton"
+                android:layout_width="wrap_content"
+                android:layout_height="15pt"
+                android:textAllCaps="false"
+                android:textSize="5pt"
+                android:text="Add"/>
+        </TableRow>
 
         <ListView
             android:id="@+id/alertsList"
@@ -50,6 +82,6 @@
             android:text="Delete this medication"
             android:textAllCaps="false"
             android:layout_marginTop="20dp"/>
-    </LinearLayout>
+    </TableLayout>
 
 </ScrollView>
