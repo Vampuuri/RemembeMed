@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +70,8 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //listener.updateEditedDialog(request, ((EditText)layout.findViewById(R.id.editFragmentText)).getText().toString());
+                Intent intent = new Intent("add-alarm");
+                LocalBroadcastManager.getInstance(AddAlarmDialogFragment.this.getActivity()).sendBroadcast(intent);
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
