@@ -25,14 +25,16 @@ public class NewMedicationDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_newmed, null);
+        final View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_newmed, null);
         builder.setView(layout);
 
         builder.setTitle("Add new medication")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //listener.updateEditedDialog(field, ((EditText)layout.findViewById(R.id.editFragmentText)).getText().toString());
+                String name = ((EditText)layout.findViewById(R.id.newMedName)).getText().toString();
+                String dose = ((EditText)layout.findViewById(R.id.newMedName)).getText().toString();
+                listener.addNewMedication(name, dose);
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
