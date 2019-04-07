@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
     int hours;
     int minutes;
     double repeatAfterHour;
+
+    AddAlarmDialogFragmentListener listener;
 
     public interface AddAlarmDialogFragmentListener {
         void addAlarm(int hours, int minutes, double repeatAfterHour);
@@ -74,8 +77,7 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent("add-alarm");
-                LocalBroadcastManager.getInstance(AddAlarmDialogFragment.this.getActivity()).sendBroadcast(intent);
+                sendAlarmInfo();
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -86,6 +88,21 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
                 });
 
         return builder.create();
+    }
+
+    public void sendAlarmInfo() {
+        listener.addAlarm(hours,minutes,repeatAfterHour);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (AddAlarmDialogFragment.AddAlarmDialogFragmentListener) context;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
