@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="10pt"
+            android:textSize="8pt"
             android:text="Selected time:"
             android:layout_margin="10pt"/>
 
@@ -21,7 +21,8 @@
             android:id="@+id/selectTimeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10pt"
+            android:layout_marginVertical="10pt"
+            android:layout_marginRight="10pt"
             android:text="change"/>
     </LinearLayout>
 
