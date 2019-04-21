@@ -36,18 +36,14 @@ public class AlarmReceiver extends BroadcastReceiver {
             builder = new NotificationCompat.Builder(context);
         }
 
-        //Medication med = (Medication) intent.getSerializableExtra("medication");
-        //System.out.println(intent.getExtras().get("index"));
-        //System.out.println(intent.getExtras().get("medication"));
-        //Intent openIntent = new Intent(context, Medication.class);
-        //openIntent.putExtra("index", intent.getExtras().getInt("index"));
-        //openIntent.putExtra("medication", med);
-        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, 0);
+        Intent openIntent = new Intent(context, MedicineActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        openIntent.putExtra("index", intent.getExtras().getInt("index"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, 0);
 
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentTitle("Time to take medication!");
-        builder.setContentText("Medication information here when i get the intent to work");
-        //builder.setContentText(med.getName() + ": " + med.getDose());
+        //builder.setContentText("Medication information here when i get the intent to work");
+        builder.setContentText(intent.getExtras().getCharSequence("medName") + ": " + intent.getExtras().getCharSequence("medDose"));
         //builder.setContentIntent(pendingIntent);
 
         Notification notification = builder.build();
