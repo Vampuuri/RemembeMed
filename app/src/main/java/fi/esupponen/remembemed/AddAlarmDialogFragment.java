@@ -61,9 +61,9 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
         ((RadioButton)layout.findViewById(R.id.radioButtonNoRepeat)).toggle();
 
         ((RadioButton)layout.findViewById(R.id.radioButtonNoRepeat)).setOnClickListener(this);
-        ((RadioButton)layout.findViewById(R.id.radioButton12h)).setOnClickListener(this);
         ((RadioButton)layout.findViewById(R.id.radioButton24h)).setOnClickListener(this);
         ((RadioButton)layout.findViewById(R.id.radioButton48h)).setOnClickListener(this);
+        ((RadioButton)layout.findViewById(R.id.radioButton72h)).setOnClickListener(this);
 
         ((EditText)layout.findViewById(R.id.newAlarmDose)).addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,11 +135,6 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
                     repeatAfterHour = 0;
                 }
                 break;
-            case R.id.radioButton12h:
-                if (checked) {
-                    repeatAfterHour = 12;
-                }
-                break;
             case R.id.radioButton24h:
                 if (checked) {
                     repeatAfterHour = 24;
@@ -150,7 +145,13 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
                     repeatAfterHour = 48;
                 }
                 break;
+            case R.id.radioButton72h:
+                if (checked) {
+                    repeatAfterHour = 72;
+                }
+                break;
         }
+
 
         Log.d("AddAlarmDialog, onClick", "" + repeatAfterHour);
     }
