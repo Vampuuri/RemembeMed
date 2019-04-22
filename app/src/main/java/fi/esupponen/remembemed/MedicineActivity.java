@@ -24,7 +24,7 @@ import fi.esupponen.remembemed.classes.Medication;
 import fi.esupponen.remembemed.dialogfragments.AddAlarmDialogFragment;
 import fi.esupponen.remembemed.dialogfragments.EditDialogFragment;
 
-public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener {
+public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener, AlarmArrayAdapter.CancelAlarmListener {
     Medication medication;
     int index;
 
@@ -121,7 +121,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.putExtra("medName", medication.getName());
             intent.putExtra("medDose", alarm.getDose());
-            intent.setAction("" + Math.random());
 
             PendingIntent alarmIntent = PendingIntent.getBroadcast(this, alarm.getId(), intent, 0);
 
@@ -143,6 +142,25 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             broadcastIntent.putExtra("index", index);
             broadcastIntent.putExtra("alarm", alarm);
             LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
+            /*
+            Intent intentRemove = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intentRemove.putExtra("medName", medication.getName());
+            intentRemove.putExtra("medDose", alarm.getDose());
+            PendingIntent alarmIntentRemove = PendingIntent.getBroadcast(this, alarm.getId(), intentRemove, 0);
+            manager.cancel(alarmIntentRemove);*/
         }
+    }
+
+    @Override
+    public void cancelAlarm(int position) {
+        Alarm alarm = medication.getAlarms().get(position);
+        AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intentRemove = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intentRemove.putExtra("medName", medication.getName());
+        intentRemove.putExtra("medDose", alarm.getDose());
+        PendingIntent alarmIntentRemove = PendingIntent.getBroadcast(this, alarm.getId(), intentRemove, 0);
+        manager.cancel(alarmIntentRemove);
     }
 }
