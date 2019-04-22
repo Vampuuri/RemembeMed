@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +26,12 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
     int hours;
     int minutes;
     double repeatAfterHour;
+    String dose;
 
     AddAlarmDialogFragmentListener listener;
 
     public interface AddAlarmDialogFragmentListener {
-        void addAlarm(int hours, int minutes, double repeatAfterHour);
+        void addAlarm(int hours, int minutes, double repeatAfterHour, String dose);
     }
 
     public void openSelectTimeFragment() {
@@ -62,6 +65,23 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
         ((RadioButton)layout.findViewById(R.id.radioButton24h)).setOnClickListener(this);
         ((RadioButton)layout.findViewById(R.id.radioButton48h)).setOnClickListener(this);
 
+        ((EditText)layout.findViewById(R.id.newAlarmDose)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Do nothing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                dose = s.toString();
+            }
+        });
+
         setTime(0,0);
 
         Button addTimeButton = (Button) layout.findViewById(R.id.selectTimeButton);
@@ -91,7 +111,7 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
     }
 
     public void sendAlarmInfo() {
-        listener.addAlarm(hours,minutes,repeatAfterHour);
+        listener.addAlarm(hours,minutes,repeatAfterHour,dose);
     }
 
     @Override
