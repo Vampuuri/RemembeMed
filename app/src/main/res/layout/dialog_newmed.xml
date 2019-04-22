@@ -18,18 +18,4 @@
         android:layout_marginHorizontal="10pt"
         android:inputType="text"
         android:hint="Name"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10pt"
-        android:text="Medicine dose"/>
-
-    <EditText
-        android:id="@+id/newMedDose"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="10pt"
-        android:inputType="text"
-        android:hint="Dose"/>
 </LinearLayout>
