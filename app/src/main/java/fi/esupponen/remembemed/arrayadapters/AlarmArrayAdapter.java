@@ -34,12 +34,17 @@ public class AlarmArrayAdapter extends ArrayAdapter {
         this.alarms = alarms;
     }
 
+    private void setCheckedOnOff(CheckBox onOff, boolean isOn) {
+        onOff.setChecked(isOn);
+    }
+
     public View getView(final int position, View view, ViewGroup parent) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View listItemView = layoutInflater.inflate(R.layout.list_alarmitem, null, true);
 
-        ((CheckBox)listItemView.findViewById(R.id.buttonOnOff)).setChecked(alarms[position].isAlarmOn());
-        ((CheckBox)listItemView.findViewById(R.id.buttonOnOff)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final CheckBox checkBoxOnOff = (CheckBox)listItemView.findViewById(R.id.buttonOnOff);
+        checkBoxOnOff.setChecked(alarms[position].isAlarmOn());
+        checkBoxOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -55,6 +60,9 @@ public class AlarmArrayAdapter extends ArrayAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 manager.setTakenAlarm(position, isChecked);
+                if (alarms[position].getHourToRepeat() == 0) {
+                    setCheckedOnOff(checkBoxOnOff, false);
+                }
             }
         });
 
