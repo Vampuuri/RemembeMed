@@ -10,15 +10,18 @@ public class Alarm implements Serializable {
     int hour;
     int minute;
     float hourToRepeat;
+
     boolean alarmOn;
+    boolean taken;
 
     String dose;
 
-    public Alarm(int hour, int minute, float hourToRepeat, boolean alarmOn, String dose) {
+    public Alarm(int hour, int minute, float hourToRepeat, boolean alarmOn, boolean taken, String dose) {
         this.hour = hour;
         this.minute = minute;
         this.hourToRepeat = hourToRepeat;
         this.alarmOn = alarmOn;
+        this.taken = taken;
         this.dose = dose;
 
         this.id = (int)(Math.random()*100000);
@@ -80,6 +83,14 @@ public class Alarm implements Serializable {
 
     public void setAlarmOn(boolean alarmOn) {
         this.alarmOn = alarmOn;
+    }
+
+    public boolean isTaken() {
+        return taken;
+    }
+
+    public void setTaken(boolean taken) {
+        this.taken = taken;
     }
 
     public int getId() {
