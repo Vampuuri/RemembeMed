@@ -14,12 +14,40 @@ public class Alarm implements Serializable {
 
     String dose;
 
+    public Alarm(int hour, int minute, float hourToRepeat, boolean alarmOn, String dose) {
+        this.hour = hour;
+        this.minute = minute;
+        this.hourToRepeat = hourToRepeat;
+        this.alarmOn = alarmOn;
+        this.dose = dose;
+
+        this.id = (int)(Math.random()*10000);
+
+        while (allIds.contains(Integer.valueOf(this.id))) {
+            this.id = (int)(Math.random()*10000);
+        }
+
+        allIds.add(Integer.valueOf(this.id));
+    }
+
     public Alarm(int id, int hour, int minute, float hourToRepeat, boolean alarmOn, String dose) {
         this.hour = hour;
         this.minute = minute;
         this.hourToRepeat = hourToRepeat;
         this.alarmOn = alarmOn;
         this.dose = dose;
+
+        if (allIds.contains(Integer.valueOf(id))) {
+            this.id = (int)(Math.random()*10000);
+
+            while (allIds.contains(Integer.valueOf(this.id))) {
+                this.id = (int)(Math.random()*10000);
+            }
+        } else {
+            this.id = id;
+        }
+
+        allIds.add(Integer.valueOf(this.id));
     }
 
     public int getHour() {
