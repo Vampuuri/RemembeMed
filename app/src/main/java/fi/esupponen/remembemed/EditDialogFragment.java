@@ -52,8 +52,6 @@ public class EditDialogFragment extends DialogFragment {
         ((TextView)layout.findViewById(R.id.editFragmentTitle)).setText("Edit " + field);
         if (request.equals(MedicationRequest.CHANGE_NAME)) {
             ((EditText)layout.findViewById(R.id.editFragmentText)).setHint(med.getName());
-        } else {
-            ((EditText)layout.findViewById(R.id.editFragmentText)).setHint(med.getDose());
         }
 
         builder.setView(layout);

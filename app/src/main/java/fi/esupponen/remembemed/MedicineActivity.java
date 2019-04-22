@@ -29,11 +29,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         frag.show(getFragmentManager(), "editNameDialog");
     }
 
-    public void editMedicineDose(View v) {
-        EditDialogFragment frag = EditDialogFragment.getInstance(medication, MedicationRequest.CHANGE_DOSE);
-        frag.show(getFragmentManager(), "editNameDialog");
-    }
-
     public void addNewAlarm(View v) {
         AddAlarmDialogFragment frag = new AddAlarmDialogFragment();
         frag.show(getFragmentManager(), "addAlarmDialogFragment");
@@ -47,15 +42,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
         super.finish();
-    }
-
-    public void updateTakenStatus(View v) {
-        medication.setDoseTaken(((CheckBox)v).isChecked());
-        Intent intent = new Intent("modify-data");
-        intent.putExtra("request", MedicationRequest.SET_TAKEN);
-        intent.putExtra("index", index);
-        intent.putExtra("taken", ((CheckBox)v).isChecked());
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public void showAlarms() {
@@ -83,10 +69,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         TextView tvTitle = (TextView) findViewById(R.id.nameView);
         tvTitle.setText(medication.getName());
 
-        TextView tvDosage = (TextView) findViewById(R.id.dosageView);
-        tvDosage.setText(medication.getDose());
-        ((CheckBox)findViewById(R.id.doseTakenCheckBox)).setChecked(medication.getDoseTaken());
-
         if (medication.getAlarms().size() > 0) {
             showAlarms();
         }
@@ -97,9 +79,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         if (request.equals(MedicationRequest.CHANGE_NAME) && !updatedInfo.equals("")) {
             medication.setName(updatedInfo);
             ((TextView)findViewById(R.id.nameView)).setText(updatedInfo);
-        } else if (request.equals(MedicationRequest.CHANGE_DOSE) && !updatedInfo.equals("")) {
-            medication.setDose(updatedInfo);
-            ((TextView)findViewById(R.id.dosageView)).setText(updatedInfo);
         }
 
         Intent intent = new Intent("modify-data");
@@ -117,7 +96,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("medName", medication.getName());
-        intent.putExtra("medDose", medication.getDose());
         intent.setAction("" + Math.random());
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
@@ -133,7 +111,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
         }
 
-        Alarm alarm = new Alarm(1, hours, minutes, (float)repeatAfterHour, true);
+        Alarm alarm = new Alarm(1, hours, minutes, (float)repeatAfterHour, true, "");
         medication.getAlarms().add(alarm);
 
         showAlarms();

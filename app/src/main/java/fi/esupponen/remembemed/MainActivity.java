@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
     public void updateData(int index, Medication updatedData) {
         medications.get(index).setName(updatedData.getName());
-        medications.get(index).setDose(updatedData.getDose());
 
         writeJsonFile();
         refreshListView();
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
     }
 
     public void setTakenMedication(int index, boolean taken) {
-        medications.get(index).setDoseTaken(taken);
         writeJsonFile();
     }
 
@@ -167,11 +165,9 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
             for (int i = 0; i < medicationArray.length(); i++) {
                 JSONObject medObject = medicationArray.getJSONObject(i);
                 String name = medObject.getString("name");
-                String dose = medObject.getString("dose");
                 Boolean taken = medObject.getBoolean("taken");
 
-                Medication newMed = new Medication(name, dose);
-                newMed.setDoseTaken(taken);
+                Medication newMed = new Medication(name);
 
                 JSONArray alarmArray = medObject.getJSONArray("alarms");
 
@@ -181,8 +177,9 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     int hour = alarmObject.getInt("hour");
                     int minute = alarmObject.getInt("minute");
                     float hourToRepeat = (float)alarmObject.getLong("hourToRepeat");
+                    String dose = alarmObject.getString("dose");
 
-                    newMed.getAlarms().add(new Alarm(id, hour, minute, hourToRepeat, true));
+                    newMed.getAlarms().add(new Alarm(id, hour, minute, hourToRepeat, true, dose));
                 }
 
                 medications.add(newMed);
@@ -246,8 +243,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
             for (Medication med : medications) {
                 JSONObject medObject = new JSONObject();
                 medObject.put("name", med.getName());
-                medObject.put("dose", med.getDose());
-                medObject.put("taken", med.getDoseTaken());
 
                 JSONArray alarmArray = new JSONArray();
 
@@ -257,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     alarmObject.put("hour", alarm.getHour());
                     alarmObject.put("minute", alarm.getMinute());
                     alarmObject.put("hourToRepeat", alarm.getHourToRepeat());
+                    alarmObject.put("dose", alarm.getDose());
 
                     alarmArray.put(alarmObject);
                 }
@@ -274,12 +270,12 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
     }
 
     @Override
-    public void addNewMedication(String name, String dose) {
-        if (name == null || dose == null || name.equals("") || name.equals("")) {
+    public void addNewMedication(String name) {
+        if (name == null || name.equals("")) {
             Log.d("addNewMedication", "empty field");
             // Implement warning later
         } else {
-            Medication newMed = new Medication(name, dose);
+            Medication newMed = new Medication(name);
             medications.add(newMed);
             writeJsonFile();
             refreshListView();

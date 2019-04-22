@@ -26,10 +26,8 @@ public class MedicationArrayAdapter extends ArrayAdapter {
         View listItemView = layoutInflater.inflate(R.layout.list_item, null, true);
 
         TextView titleTextView = listItemView.findViewById(R.id.medicineTitle);
-        TextView dosageTextView = listItemView.findViewById(R.id.medicineDosage);
 
         titleTextView.setText(medications[position].getName());
-        dosageTextView.setText(medications[position].getDose());
 
         return listItemView;
     }
