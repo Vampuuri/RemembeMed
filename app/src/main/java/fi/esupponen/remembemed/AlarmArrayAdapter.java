@@ -23,15 +23,18 @@ public class AlarmArrayAdapter extends ArrayAdapter {
 
         TextView titleTextView = listItemView.findViewById(R.id.alarmTitle);
         TextView repeatTextView = listItemView.findViewById(R.id.alarmInfo);
+        TextView doseTextView = listItemView.findViewById(R.id.alarmDose);
 
         titleTextView.setText(String.format(
-                "Selected time: %02d:%02d", alarms[position].getHour(), alarms[position].getMinute()
+                "%02d:%02d", alarms[position].getHour(), alarms[position].getMinute()
         ));
         if (alarms[position].getHourToRepeat() == 0) {
-            repeatTextView.setText("Repeat: No repeat");
+            repeatTextView.setText("No repeat");
         } else {
             repeatTextView.setText("Repeat: every " + alarms[position].getHourToRepeat() + " hours");
         }
+
+        doseTextView.setText(alarms[position].getDose());
 
         return listItemView;
     }
