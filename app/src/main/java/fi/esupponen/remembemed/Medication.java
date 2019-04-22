@@ -8,15 +8,11 @@ import java.util.stream.Stream;
 
 public class Medication implements Serializable {
     String name;
-    String dose;
-    Boolean doseTaken;
     LinkedList<Alarm> alarms;
 
-    public Medication(String name, String dose) {
+    public Medication(String name) {
         this.name = name;
-        this.dose = dose;
         this.alarms = new LinkedList<>();
-        doseTaken = false;
     }
 
     public String getName() {
@@ -25,29 +21,5 @@ public class Medication implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDose() {
-        return dose;
-    }
-
-    public void setDose(String dose) {
-        this.dose = dose;
-    }
-
-    public String toString() {
-        return "Medication: " + name + " " + dose;
-    }
-
-    public LinkedList<Alarm> getAlarms() {
-        return alarms;
-    }
-
-    public Boolean getDoseTaken() {
-        return doseTaken;
-    }
-
-    public void setDoseTaken(Boolean doseTaken) {
-        this.doseTaken = doseTaken;
     }
 }
