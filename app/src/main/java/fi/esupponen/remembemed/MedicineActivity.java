@@ -113,7 +113,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         if (dose == null ||dose.equals("")) {
             Toast.makeText(this, "Dose cannot be empty, please try again", Toast.LENGTH_LONG).show();
         } else {
-            Alarm alarm = new Alarm(hours, minutes, (float)repeatAfterHour, true, dose);
+            Alarm alarm = new Alarm(hours, minutes, (float)repeatAfterHour, true, false, dose);
             medication.getAlarms().add(alarm);
 
             activateAlarm(medication.getAlarms().size()-1);

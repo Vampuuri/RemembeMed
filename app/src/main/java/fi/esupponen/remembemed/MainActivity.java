@@ -173,9 +173,13 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     int hour = alarmObject.getInt("hour");
                     int minute = alarmObject.getInt("minute");
                     float hourToRepeat = (float)alarmObject.getLong("hourToRepeat");
+
+                    boolean alarmOn = alarmObject.getBoolean("alarmOn");
+                    boolean taken = alarmObject.getBoolean("taken");
+
                     String dose = alarmObject.getString("dose");
 
-                    newMed.getAlarms().add(new Alarm(id, hour, minute, hourToRepeat, true, dose));
+                    newMed.getAlarms().add(new Alarm(id, hour, minute, hourToRepeat, alarmOn, taken, dose));
                 }
 
                 medications.add(newMed);
@@ -248,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     alarmObject.put("hour", alarm.getHour());
                     alarmObject.put("minute", alarm.getMinute());
                     alarmObject.put("hourToRepeat", alarm.getHourToRepeat());
+                    alarmObject.put("alarmOn", alarm.isAlarmOn());
+                    alarmObject.put("taken", alarm.isTaken());
                     alarmObject.put("dose", alarm.getDose());
 
                     alarmArray.put(alarmObject);
