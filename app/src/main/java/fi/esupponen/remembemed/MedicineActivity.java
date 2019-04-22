@@ -172,6 +172,10 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
     @Override
     public void removeAlarm(int position) {
+        Log.d("MedicineActivity", "remove alarm: " + position);
 
+        medication.getAlarms().remove(position);
+
+        showAlarms();
     }
 }
