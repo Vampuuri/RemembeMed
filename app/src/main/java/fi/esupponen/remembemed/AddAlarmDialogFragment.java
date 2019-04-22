@@ -53,6 +53,7 @@ public class AddAlarmDialogFragment extends DialogFragment implements View.OnCli
         hours = 0;
         minutes = 0;
         repeatAfterHour = 0;
+        dose = "";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
