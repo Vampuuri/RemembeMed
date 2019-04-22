@@ -44,14 +44,14 @@ public class MedicationArrayAdapter extends ArrayAdapter {
                             "%02d:%02d", alarms.get(i).getHour(), alarms.get(i).getMinute()
                     ) + " - " + alarms.get(i).getDose();
 
+                    if (alarms.get(i).isTaken()) {
+                        allDosesString += " - TAKEN!";
+                    }
+
                     if (i != alarms.size() - 1) {
                         allDosesString += "\n";
                     }
                 }
-            }
-
-            if (allDosesString.equals("")) {
-                allDosesString = "No alarms on.";
             }
         }
 
