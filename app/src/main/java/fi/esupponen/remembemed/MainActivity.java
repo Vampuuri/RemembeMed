@@ -1,9 +1,11 @@
 package fi.esupponen.remembemed;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,17 +52,26 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
     }
 
     public void addAlarmToMedication(int index, Alarm alarm) {
+        Log.d("removeAlarmFromMedication", index + " " + alarm);
         medications.get(index).getAlarms().add(alarm);
         writeJsonFile();
     }
 
     public void removeAlarmFromMedication(int medicationIndex, int alarmIndex) {
+        Log.d("removeAlarmFromMedication", medicationIndex + " " + alarmIndex);
         medications.get(medicationIndex).getAlarms().remove(alarmIndex);
         writeJsonFile();
     }
 
     public void setTakenDose(int medicationIndex, int alarmIndex, boolean taken) {
+        Log.d("setTakenDose", medicationIndex + " " + alarmIndex + " " + taken);
         medications.get(medicationIndex).getAlarms().get(alarmIndex).setTaken(taken);
+        writeJsonFile();
+    }
+
+    public void setAlarmActive(int medicationIndex, int alarmIndex, boolean active) {
+        Log.d("setAlarmActive", medicationIndex + " " + alarmIndex + " " + active);
+        medications.get(medicationIndex).getAlarms().get(alarmIndex).setAlarmOn(active);
         writeJsonFile();
     }
 
@@ -78,18 +89,27 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     int index = intent.getExtras().getInt("index");
                     deleteData(index);
                 } else if (request.equals(MedicationRequest.ADD_ALARM)) {
+                    System.out.println(intent.getExtras());
                     Alarm alarm = (Alarm) intent.getExtras().getSerializable("alarm");
                     int index = intent.getExtras().getInt("index");
                     addAlarmToMedication(index, alarm);
                 } else if (request.equals(MedicationRequest.REMOVE_ALARM)) {
+                    System.out.println(intent.getExtras());
                     int medIndex = intent.getExtras().getInt("medicationIndex");
                     int alarmIndex = intent.getExtras().getInt("alarmIndex");
                     removeAlarmFromMedication(medIndex, alarmIndex);
                 } else if (request.equals(MedicationRequest.SET_TAKEN)) {
+                    System.out.println(intent.getExtras());
                     int medIndex = intent.getExtras().getInt("medicationIndex");
                     int alarmIndex = intent.getExtras().getInt("alarmIndex");
                     boolean taken = intent.getExtras().getBoolean("taken");
                     setTakenDose(medIndex, alarmIndex, taken);
+                } else if (request.equals(MedicationRequest.SET_ALARM_ACTIVE)) {
+                    System.out.println(intent.getExtras());
+                    int medIndex = intent.getExtras().getInt("medicationIndex");
+                    int alarmIndex = intent.getExtras().getInt("alarmIndex");
+                    boolean active = intent.getExtras().getBoolean("active");
+                    setAlarmActive(medIndex, alarmIndex, active);
                 }
             }
         };
@@ -286,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
 
             Intent intent = new Intent(this, MedicineActivity.class);
             intent.putExtra("medication", newMed);
+            intent.putExtra("index", medications.size()-1);
             startActivity(intent);
         }
     }
