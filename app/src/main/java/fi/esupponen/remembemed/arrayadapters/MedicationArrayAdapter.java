@@ -13,25 +13,57 @@ import fi.esupponen.remembemed.classes.Alarm;
 import fi.esupponen.remembemed.classes.Medication;
 import fi.esupponen.remembemed.R;
 
+/**
+ * @author Essi Supponen [essi.supponen@tuni.fi]
+ * @version 2019-04-19
+ * @since 1.8
+ */
 public class MedicationArrayAdapter extends ArrayAdapter {
+
+    /**
+     * Context of the array adapter, MainActivity
+     */
     private final Activity context;
+
+    /**
+     * Array of medications for ListView
+     */
     private Medication[] medications;
 
+    /**
+     * Constructor for MedicationArrayAdapter.
+     *
+     * @param context
+     * @param medications
+     */
     public MedicationArrayAdapter(Activity context, Medication[] medications) {
         super(context, R.layout.list_item, new String[medications.length]);
         this.context = context;
         this.medications = medications;
     }
 
+    /**
+     * Returns one view object of the list in the given position.
+     *
+     * @param position
+     * @param view
+     * @param parent
+     * @return one view object
+     */
     public View getView(int position, View view, ViewGroup parent) {
+
+        // Create layout
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View listItemView = layoutInflater.inflate(R.layout.list_item, null, true);
 
+        // Get TextViews from layout
         TextView titleTextView = listItemView.findViewById(R.id.medicineTitle);
         TextView allDosesTextView = listItemView.findViewById(R.id.allDoses);
 
+        // Set title text
         titleTextView.setText(medications[position].getName());
 
+        // Parse an string of every alarm/dose of the medication
         String allDosesString = "";
         List<Alarm> alarms = medications[position].getAlarms();
 
