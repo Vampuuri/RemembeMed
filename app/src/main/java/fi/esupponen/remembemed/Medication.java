@@ -22,4 +22,8 @@ public class Medication implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public LinkedList<Alarm> getAlarms() {
+        return alarms;
+    }
 }
