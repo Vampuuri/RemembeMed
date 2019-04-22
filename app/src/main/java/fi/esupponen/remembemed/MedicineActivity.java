@@ -99,6 +99,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("medName", medication.getName());
+        intent.putExtra("medDose", alarm.getDose());
         intent.setAction("" + Math.random());
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, alarm.getId(), intent, 0);
