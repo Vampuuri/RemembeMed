@@ -39,13 +39,19 @@ public class MedicationArrayAdapter extends ArrayAdapter {
             allDosesString = "No alarms set.";
         } else {
             for (int i = 0; i < alarms.size(); i++) {
-                allDosesString += String.format(
-                        "%02d:%02d", alarms.get(i).getHour(), alarms.get(i).getMinute()
-                ) + " - " + alarms.get(i).getDose();
+                if (alarms.get(i).isAlarmOn()) {
+                    allDosesString += String.format(
+                            "%02d:%02d", alarms.get(i).getHour(), alarms.get(i).getMinute()
+                    ) + " - " + alarms.get(i).getDose();
 
-                if (i != alarms.size() - 1) {
-                    allDosesString += "\n";
+                    if (i != alarms.size() - 1) {
+                        allDosesString += "\n";
+                    }
                 }
+            }
+
+            if (allDosesString.equals("")) {
+                allDosesString = "No alarms on.";
             }
         }
 
