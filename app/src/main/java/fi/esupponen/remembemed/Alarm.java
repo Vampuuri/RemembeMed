@@ -1,8 +1,11 @@
 package fi.esupponen.remembemed;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class Alarm implements Serializable {
+    public static LinkedList<Integer> allIds = new LinkedList<>();
+
     int id;
     int hour;
     int minute;
@@ -12,7 +15,6 @@ public class Alarm implements Serializable {
     String dose;
 
     public Alarm(int id, int hour, int minute, float hourToRepeat, boolean alarmOn, String dose) {
-        this.id = id;
         this.hour = hour;
         this.minute = minute;
         this.hourToRepeat = hourToRepeat;
