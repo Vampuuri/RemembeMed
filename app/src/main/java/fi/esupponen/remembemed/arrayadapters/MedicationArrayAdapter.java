@@ -15,7 +15,7 @@ import fi.esupponen.remembemed.R;
 
 /**
  * @author Essi Supponen [essi.supponen@tuni.fi]
- * @version 2019-04-19
+ * @version 2019-04-22
  * @since 1.8
  */
 public class MedicationArrayAdapter extends ArrayAdapter {
