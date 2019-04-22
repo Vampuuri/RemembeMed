@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         registerModifyDataReceiver();
 
         readInfoFromFile();
-
-        System.out.println(getIntent().hasExtra("moveToMedicationNumber"));
-
         refreshListView();
     }
 
@@ -165,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
             for (int i = 0; i < medicationArray.length(); i++) {
                 JSONObject medObject = medicationArray.getJSONObject(i);
                 String name = medObject.getString("name");
-                Boolean taken = medObject.getBoolean("taken");
 
                 Medication newMed = new Medication(name);
 
