@@ -1,4 +1,4 @@
-package fi.esupponen.remembemed;
+package fi.esupponen.remembemed.arrayadapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import fi.esupponen.remembemed.classes.Alarm;
+import fi.esupponen.remembemed.R;
 
 public class AlarmArrayAdapter extends ArrayAdapter {
     private final Activity context;

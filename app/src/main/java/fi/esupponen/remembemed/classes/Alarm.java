@@ -1,4 +1,4 @@
-package fi.esupponen.remembemed;
+package fi.esupponen.remembemed.classes;
 
 import java.io.Serializable;
 import java.util.LinkedList;

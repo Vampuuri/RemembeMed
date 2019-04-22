@@ -1,41 +1,33 @@
 package fi.esupponen.remembemed;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
-import android.graphics.Paint;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.sql.Time;
 import java.util.ArrayList;
+
+import fi.esupponen.remembemed.arrayadapters.MedicationArrayAdapter;
+import fi.esupponen.remembemed.classes.Alarm;
+import fi.esupponen.remembemed.classes.Medication;
+import fi.esupponen.remembemed.dialogfragments.NewMedicationDialogFragment;
 
 public class MainActivity extends AppCompatActivity implements NewMedicationDialogFragment.NewMedicationFragmentListener {
     private ArrayList<Medication> medications;

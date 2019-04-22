@@ -2,23 +2,24 @@ package fi.esupponen.remembemed;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.icu.util.Calendar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.List;
+
+import fi.esupponen.remembemed.arrayadapters.AlarmArrayAdapter;
+import fi.esupponen.remembemed.classes.Alarm;
+import fi.esupponen.remembemed.classes.Medication;
+import fi.esupponen.remembemed.dialogfragments.AddAlarmDialogFragment;
+import fi.esupponen.remembemed.dialogfragments.EditDialogFragment;
 
 public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener {
     Medication medication;

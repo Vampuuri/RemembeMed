@@ -1,10 +1,9 @@
-package fi.esupponen.remembemed;
+package fi.esupponen.remembemed.classes;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Stream;
+
+import fi.esupponen.remembemed.classes.Alarm;
 
 public class Medication implements Serializable {
     String name;

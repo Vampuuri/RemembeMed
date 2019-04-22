@@ -1,12 +1,10 @@
-package fi.esupponen.remembemed;
+package fi.esupponen.remembemed.dialogfragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.widget.TimePicker;
 
 public class TimeDialogFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {

@@ -1,4 +1,4 @@
-package fi.esupponen.remembemed;
+package fi.esupponen.remembemed.dialogfragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import fi.esupponen.remembemed.classes.Medication;
+import fi.esupponen.remembemed.MedicationRequest;
+import fi.esupponen.remembemed.R;
 
 public class EditDialogFragment extends DialogFragment {
 
