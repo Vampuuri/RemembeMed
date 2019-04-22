@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -261,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
     public void addNewMedication(String name) {
         if (name == null || name.equals("")) {
             Log.d("addNewMedication", "empty field");
-            // Implement warning later
+            Toast.makeText(this, "Cannot create medication with empty name. Please try again", Toast.LENGTH_LONG).show();
         } else {
             Medication newMed = new Medication(name);
             medications.add(newMed);
