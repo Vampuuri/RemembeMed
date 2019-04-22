@@ -1,8 +1,10 @@
 package fi.esupponen.remembemed;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v4.content.LocalBroadcastManager;
@@ -36,13 +38,27 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     }
 
     public void deleteMedication(View v) {
-        // TODO: dialog for making sure, that user really wants to delete medication
-        Intent intent = new Intent("modify-data");
-        intent.putExtra("request", MedicationRequest.DELETE);
-        intent.putExtra("index", index);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you really want to delete this medication?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent("modify-data");
+                        intent.putExtra("request", MedicationRequest.DELETE);
+                        intent.putExtra("index", index);
+                        LocalBroadcastManager.getInstance(MedicineActivity.this).sendBroadcast(intent);
+                        MedicineActivity.super.finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                });
 
-        super.finish();
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public void showAlarms() {
