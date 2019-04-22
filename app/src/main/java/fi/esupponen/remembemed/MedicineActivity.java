@@ -116,24 +116,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             Alarm alarm = new Alarm(hours, minutes, (float)repeatAfterHour, true, dose);
             medication.getAlarms().add(alarm);
 
-            AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-
-            Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.putExtra("medName", medication.getName());
-            intent.putExtra("medDose", alarm.getDose());
-
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, alarm.getId(), intent, 0);
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, alarm.getHour());
-            calendar.set(Calendar.MINUTE, alarm.getMinute());
-
-            if (repeatAfterHour == 0) {
-                manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
-            } else {
-                manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
-            }
+            activateAlarm(medication.getAlarms().size()-1);
 
             showAlarms();
 
@@ -147,14 +130,37 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
     @Override
     public void activateAlarm(int position) {
+        Log.d("MedicineActivity", "activate alarm: " + position);
 
+        Alarm alarm = medication.getAlarms().get(position);
+        alarm.setAlarmOn(true);
+
+        AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
+        Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("medName", medication.getName());
+        intent.putExtra("medDose", alarm.getDose());
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, alarm.getId(), intent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, alarm.getHour());
+        calendar.set(Calendar.MINUTE, alarm.getMinute());
+
+        if (alarm.getHourToRepeat() == 0) {
+            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
+        } else {
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)alarm.getHourToRepeat(), alarmIntent);
+        }
     }
 
     @Override
     public void cancelAlarm(int position) {
-        Log.d("MedicineActivity", "cancel alarm");
+        Log.d("MedicineActivity", "cancel alarm: " + position);
 
         Alarm alarm = medication.getAlarms().get(position);
+        alarm.setAlarmOn(false);
         AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
         Intent intentRemove = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
