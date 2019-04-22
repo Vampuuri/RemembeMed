@@ -24,6 +24,11 @@ import fi.esupponen.remembemed.classes.Medication;
 import fi.esupponen.remembemed.dialogfragments.AddAlarmDialogFragment;
 import fi.esupponen.remembemed.dialogfragments.EditDialogFragment;
 
+/**
+ * @author Essi Supponen [essi.supponen@tuni.fi]
+ * @version 2019-04-23
+ * @since 1.8
+ */
 public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener, AlarmArrayAdapter.AlarmManaging {
     Medication medication;
     int index;
@@ -118,15 +123,15 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             Alarm alarm = new Alarm(hours, minutes, (float)repeatAfterHour, true, false, dose);
             medication.getAlarms().add(alarm);
 
-            activateAlarm(medication.getAlarms().size()-1);
-
-            showAlarms();
-
             Intent broadcastIntent = new Intent("modify-data");
             broadcastIntent.putExtra("request", MedicationRequest.ADD_ALARM);
             broadcastIntent.putExtra("index", index);
             broadcastIntent.putExtra("alarm", alarm);
             LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
+            activateAlarm(medication.getAlarms().size()-1);
+
+            showAlarms();
         }
     }
 
@@ -155,6 +160,13 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         } else {
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)alarm.getHourToRepeat(), alarmIntent);
         }
+
+        Intent broadcastIntent = new Intent("modify-data");
+        broadcastIntent.putExtra("request", MedicationRequest.SET_ALARM_ACTIVE);
+        broadcastIntent.putExtra("medicationIndex", index);
+        broadcastIntent.putExtra("alarmIndex", position);
+        broadcastIntent.putExtra("active", true);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
     @Override
@@ -170,6 +182,13 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         intentRemove.putExtra("medDose", alarm.getDose());
         PendingIntent alarmIntentRemove = PendingIntent.getBroadcast(this, alarm.getId(), intentRemove, 0);
         manager.cancel(alarmIntentRemove);
+
+        Intent broadcastIntent = new Intent("modify-data");
+        broadcastIntent.putExtra("request", MedicationRequest.SET_ALARM_ACTIVE);
+        broadcastIntent.putExtra("medicationIndex", index);
+        broadcastIntent.putExtra("alarmIndex", position);
+        broadcastIntent.putExtra("active", false);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
     @Override
