@@ -48,4 +48,11 @@
             android:textAllCaps="false"/>
     </LinearLayout>
 
+    <CheckBox
+        android:id="@+id/doseTakenCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10pt"
+        android:text="Check if you have taken your dose" />
+
 </LinearLayout>
