@@ -26,8 +26,28 @@ public class MedicationArrayAdapter extends ArrayAdapter {
         View listItemView = layoutInflater.inflate(R.layout.list_item, null, true);
 
         TextView titleTextView = listItemView.findViewById(R.id.medicineTitle);
+        TextView allDosesTextView = listItemView.findViewById(R.id.allDoses);
 
         titleTextView.setText(medications[position].getName());
+
+        String allDosesString = "";
+        List<Alarm> alarms = medications[position].getAlarms();
+
+        if (alarms.size() == 0) {
+            allDosesString = "No alarms set.";
+        } else {
+            for (int i = 0; i < alarms.size(); i++) {
+                allDosesString += String.format(
+                        "%02d:%02d", alarms.get(i).getHour(), alarms.get(i).getMinute()
+                ) + " - " + alarms.get(i).getDose();
+
+                if (i != alarms.size() - 1) {
+                    allDosesString += "\n";
+                }
+            }
+        }
+
+        allDosesTextView.setText(allDosesString);
 
         return listItemView;
     }
