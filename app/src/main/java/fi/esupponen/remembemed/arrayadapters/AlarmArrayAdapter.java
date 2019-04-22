@@ -24,6 +24,7 @@ public class AlarmArrayAdapter extends ArrayAdapter {
         void cancelAlarm(int position);
         void activateAlarm(int position);
         void removeAlarm(int position);
+        void setTakenAlarm(int position, boolean taken);
     }
 
     public AlarmArrayAdapter(Activity context, AlarmManaging manager, Alarm[] alarms) {
