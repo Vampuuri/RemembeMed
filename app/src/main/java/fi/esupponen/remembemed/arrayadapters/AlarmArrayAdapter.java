@@ -15,6 +15,10 @@ public class AlarmArrayAdapter extends ArrayAdapter {
     private final Activity context;
     private Alarm[] alarms;
 
+    interface CancelAlarmListener {
+        void cancelAlarm(int position);
+    }
+
     public AlarmArrayAdapter(Activity context, Alarm[] alarms) {
         super(context, R.layout.list_item, new String[alarms.length]);
         this.context = context;
