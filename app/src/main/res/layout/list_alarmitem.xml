@@ -4,27 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/alarmTitle"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="00:00"
-            android:textSize="8pt" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/buttonOnOff"
+            <TextView
+                android:id="@+id/alarmTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="00:00"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/alarmInfo"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="Repeats here"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alarm on"/>
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonDeleteAlarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textAllCaps="false"/>
+
+            <RadioButton
+                android:id="@+id/buttonOnOff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alarm on"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -33,26 +60,18 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/alarmInfo"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:text="Repeat: "/>
-
-        <Button
-            android:id="@+id/buttonDeleteAlarm"
+            android:id="@+id/doseTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
-            android:textAllCaps="false"/>
-    </LinearLayout>
+            android:paddingHorizontal="15dp"
+            android:textSize="20dp"
+            android:text="Dose:"/>
 
-    <CheckBox
-        android:id="@+id/doseTakenCheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10pt"
-        android:text="Check if you have taken your dose" />
+        <CheckBox
+            android:id="@+id/doseTakenCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Taken" />
+    </LinearLayout>
 
 </LinearLayout>
