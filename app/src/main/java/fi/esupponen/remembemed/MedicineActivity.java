@@ -89,8 +89,8 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     }
 
     @Override
-    public void addAlarm(int hours, int minutes, double repeatAfterHour) {
-        Log.d("MedicineActivity", hours + ":" + minutes + " repeat: " + repeatAfterHour);
+    public void addAlarm(int hours, int minutes, double repeatAfterHour, String dose) {
+        Log.d("MedicineActivity", hours + ":" + minutes + " repeat: " + repeatAfterHour + " Dose: " + dose);
 
         AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
@@ -111,7 +111,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
         }
 
-        Alarm alarm = new Alarm(1, hours, minutes, (float)repeatAfterHour, true, "");
+        Alarm alarm = new Alarm(1, hours, minutes, (float)repeatAfterHour, true, dose);
         medication.getAlarms().add(alarm);
 
         showAlarms();
