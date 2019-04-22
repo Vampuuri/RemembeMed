@@ -1,11 +1,13 @@
 package fi.esupponen.remembemed.arrayadapters;
 
 import android.app.Activity;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -35,6 +37,16 @@ public class AlarmArrayAdapter extends ArrayAdapter {
         View listItemView = layoutInflater.inflate(R.layout.list_alarmitem, null, true);
 
         ((RadioButton)listItemView.findViewById(R.id.buttonOnOff)).setChecked(alarms[position].isAlarmOn());
+        ((RadioButton)listItemView.findViewById(R.id.buttonOnOff)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    manager.activateAlarm(position);
+                } else {
+                    manager.cancelAlarm(position);
+                }
+            }
+        });
 
         TextView titleTextView = listItemView.findViewById(R.id.alarmTitle);
         TextView repeatTextView = listItemView.findViewById(R.id.alarmInfo);
@@ -55,6 +67,7 @@ public class AlarmArrayAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
                 manager.cancelAlarm(position);
+                manager.removeAlarm(position);
             }
         });
 
