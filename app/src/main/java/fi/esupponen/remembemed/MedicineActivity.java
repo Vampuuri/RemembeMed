@@ -24,7 +24,7 @@ import fi.esupponen.remembemed.classes.Medication;
 import fi.esupponen.remembemed.dialogfragments.AddAlarmDialogFragment;
 import fi.esupponen.remembemed.dialogfragments.EditDialogFragment;
 
-public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener, AlarmArrayAdapter.CancelAlarmListener {
+public class MedicineActivity extends AppCompatActivity implements EditDialogFragment.EditDialogListener, AddAlarmDialogFragment.AddAlarmDialogFragmentListener, AlarmArrayAdapter.AlarmManaging {
     Medication medication;
     int index;
 
@@ -71,7 +71,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         }
 
         ListView list = (ListView) findViewById(R.id.alarmsList);
-        AlarmArrayAdapter adapter = new AlarmArrayAdapter(this, alarmArray);
+        AlarmArrayAdapter adapter = new AlarmArrayAdapter(this, this, alarmArray);
         list.setAdapter(adapter);
     }
 
@@ -142,18 +142,18 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
             broadcastIntent.putExtra("index", index);
             broadcastIntent.putExtra("alarm", alarm);
             LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
-
-            /*
-            Intent intentRemove = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intentRemove.putExtra("medName", medication.getName());
-            intentRemove.putExtra("medDose", alarm.getDose());
-            PendingIntent alarmIntentRemove = PendingIntent.getBroadcast(this, alarm.getId(), intentRemove, 0);
-            manager.cancel(alarmIntentRemove);*/
         }
     }
 
     @Override
+    public void activateAlarm(int position) {
+
+    }
+
+    @Override
     public void cancelAlarm(int position) {
+        Log.d("MedicineActivity", "cancel alarm");
+
         Alarm alarm = medication.getAlarms().get(position);
         AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
@@ -162,5 +162,10 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         intentRemove.putExtra("medDose", alarm.getDose());
         PendingIntent alarmIntentRemove = PendingIntent.getBroadcast(this, alarm.getId(), intentRemove, 0);
         manager.cancel(alarmIntentRemove);
+    }
+
+    @Override
+    public void removeAlarm(int position) {
+
     }
 }
