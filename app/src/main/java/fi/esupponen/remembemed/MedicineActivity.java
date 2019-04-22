@@ -187,6 +187,13 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
     @Override
     public void setTakenAlarm(int position, boolean taken) {
-        System.out.println(position + " " + taken);
+        medication.getAlarms().get(position).setTaken(taken);
+
+        Intent broadcastIntent = new Intent("modify-data");
+        broadcastIntent.putExtra("request", MedicationRequest.SET_TAKEN);
+        broadcastIntent.putExtra("medIndex", index);
+        broadcastIntent.putExtra("alarmIndex", position);
+        broadcastIntent.putExtra("taken", taken);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 }
