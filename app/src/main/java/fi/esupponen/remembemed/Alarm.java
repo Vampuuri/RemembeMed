@@ -9,12 +9,15 @@ public class Alarm implements Serializable {
     float hourToRepeat;
     boolean alarmOn;
 
-    public Alarm(int id, int hour, int minute, float hourToRepeat, boolean alarmOn) {
+    String dose;
+
+    public Alarm(int id, int hour, int minute, float hourToRepeat, boolean alarmOn, String dose) {
         this.id = id;
         this.hour = hour;
         this.minute = minute;
         this.hourToRepeat = hourToRepeat;
         this.alarmOn = alarmOn;
+        this.dose = dose;
     }
 
     public int getHour() {
@@ -51,5 +54,13 @@ public class Alarm implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
     }
 }
