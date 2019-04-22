@@ -50,6 +50,14 @@ public class AlarmArrayAdapter extends ArrayAdapter {
             }
         });
 
+        ((CheckBox)listItemView.findViewById(R.id.doseTakenCheckBox)).setChecked(alarms[position].isTaken());
+        ((CheckBox)listItemView.findViewById(R.id.doseTakenCheckBox)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                manager.setTakenAlarm(position, isChecked);
+            }
+        });
+
         TextView titleTextView = listItemView.findViewById(R.id.alarmTitle);
         TextView repeatTextView = listItemView.findViewById(R.id.alarmInfo);
         TextView doseTextView = listItemView.findViewById(R.id.alarmDose);
