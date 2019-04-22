@@ -15,7 +15,7 @@
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/medicineDosage"
+        android:id="@+id/allDoses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
