@@ -84,6 +84,8 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         medication = (Medication) b.getSerializable("medication");
         index = b.getInt("index");
 
+        Log.d("MedicineActivity, onCreate", "index: " + b.getInt("index"));
+
         TextView tvTitle = (TextView) findViewById(R.id.nameView);
         tvTitle.setText(medication.getName());
 
@@ -178,7 +180,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         Intent broadcastIntent = new Intent("modify-data");
         broadcastIntent.putExtra("request", MedicationRequest.REMOVE_ALARM);
-        broadcastIntent.putExtra("medIndex", index);
+        broadcastIntent.putExtra("medicationIndex", index);
         broadcastIntent.putExtra("alarmIndex", position);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
 
@@ -191,7 +193,7 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         Intent broadcastIntent = new Intent("modify-data");
         broadcastIntent.putExtra("request", MedicationRequest.SET_TAKEN);
-        broadcastIntent.putExtra("medIndex", index);
+        broadcastIntent.putExtra("medicationIndex", index);
         broadcastIntent.putExtra("alarmIndex", position);
         broadcastIntent.putExtra("taken", taken);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
