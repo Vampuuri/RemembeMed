@@ -26,27 +26,6 @@
             android:onClick="editMedicineName"/>
     </TableRow>
 
-    <TableRow>
-        <TextView
-            android:id="@+id/dosageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:textSize="8pt"
-            android:text="Medicine dose"/>
-
-        <Button
-            android:id="@+id/modifyDoseNameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="17pt"
-            android:textAllCaps="false"
-            android:textSize="5pt"
-            android:text="Edit"
-            android:onClick="editMedicineDose"/>
-    </TableRow>
-
     <CheckBox
         android:id="@+id/doseTakenCheckBox"
         android:layout_width="match_parent"
