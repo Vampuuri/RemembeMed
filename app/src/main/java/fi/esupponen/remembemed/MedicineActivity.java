@@ -116,7 +116,6 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
         AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("index", index);
         intent.putExtra("medName", medication.getName());
         intent.putExtra("medDose", medication.getDose());
         intent.setAction("" + Math.random());

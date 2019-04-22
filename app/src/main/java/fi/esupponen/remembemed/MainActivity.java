@@ -108,20 +108,22 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                toMedicationInfo(view, position, id);
+                toMedicationInfo(position);
             }
         });
 
         registerModifyDataReceiver();
 
         readInfoFromFile();
+
+        System.out.println(getIntent().hasExtra("moveToMedicationNumber"));
+
         refreshListView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         refreshListView();
     }
 
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         super.onDestroy();
     }
 
-    public void toMedicationInfo(View view, int position, long id) {
+    public void toMedicationInfo(int position) {
         Intent intent = new Intent(this, MedicineActivity.class);
         intent.putExtra("medication", medications.get(position));
         intent.putExtra("index", position);

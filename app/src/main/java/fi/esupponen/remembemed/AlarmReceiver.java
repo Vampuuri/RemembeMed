@@ -26,8 +26,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
 
@@ -36,17 +34,17 @@ public class AlarmReceiver extends BroadcastReceiver {
             builder = new NotificationCompat.Builder(context);
         }
 
-        Intent openIntent = new Intent(context, MedicineActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        openIntent.putExtra("index", intent.getExtras().getInt("index"));
+        Intent openIntent = new Intent(context, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, openIntent, 0);
 
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentTitle("Time to take medication!");
         //builder.setContentText("Medication information here when i get the intent to work");
         builder.setContentText(intent.getExtras().getCharSequence("medName") + ": " + intent.getExtras().getCharSequence("medDose"));
-        //builder.setContentIntent(pendingIntent);
+        builder.setContentIntent(pendingIntent);
 
         Notification notification = builder.build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         int id = 0;
