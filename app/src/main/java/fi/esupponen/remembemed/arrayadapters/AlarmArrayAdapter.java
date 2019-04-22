@@ -37,7 +37,7 @@ public class AlarmArrayAdapter extends ArrayAdapter {
         if (alarms[position].getHourToRepeat() == 0) {
             repeatTextView.setText("No repeat");
         } else {
-            repeatTextView.setText("Repeat: every " + alarms[position].getHourToRepeat() + " hours");
+            repeatTextView.setText(String.format("Repeat every %2.0f hours", alarms[position].getHourToRepeat()));
         }
 
         doseTextView.setText(alarms[position].getDose());
