@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         writeJsonFile();
     }
 
+    public void removeAlarmFromMedication(int medicationIndex, int alarmIndex) {
+        medications.get(medicationIndex).getAlarms().remove(alarmIndex);
+        writeJsonFile();
+    }
+
     public void setTakenMedication(int index, boolean taken) {
         writeJsonFile();
     }
@@ -74,12 +79,14 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                 } else if (request.equals(MedicationRequest.ADD_ALARM)) {
                     Alarm alarm = (Alarm) intent.getExtras().getSerializable("alarm");
                     int index = intent.getExtras().getInt("index");
-                    System.out.println(index);
                     addAlarmToMedication(index, alarm);
+                } else if (request.equals(MedicationRequest.REMOVE_ALARM)) {
+                    int medIndex = intent.getExtras().getInt("medicationIndex");
+                    int alarmIndex = intent.getExtras().getInt("alarmIndex");
+                    removeAlarmFromMedication(medIndex, alarmIndex);
                 } else if (request.equals(MedicationRequest.SET_TAKEN)) {
                     int index = intent.getExtras().getInt("index");
                     boolean taken = intent.getExtras().getBoolean("taken");
-                    System.out.println(index);
                     setTakenMedication(index, taken);
                 }
             }
