@@ -176,6 +176,12 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         medication.getAlarms().remove(position);
 
+        Intent broadcastIntent = new Intent("modify-data");
+        broadcastIntent.putExtra("request", MedicationRequest.REMOVE_ALARM);
+        broadcastIntent.putExtra("medIndex", index);
+        broadcastIntent.putExtra("alarmIndex", position);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
         showAlarms();
     }
 }
