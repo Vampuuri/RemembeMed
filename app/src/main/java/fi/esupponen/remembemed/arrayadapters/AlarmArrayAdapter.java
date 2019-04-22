@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import fi.esupponen.remembemed.classes.Alarm;
@@ -23,6 +24,8 @@ public class AlarmArrayAdapter extends ArrayAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View listItemView = layoutInflater.inflate(R.layout.list_alarmitem, null, true);
+
+        ((RadioButton)listItemView.findViewById(R.id.buttonOnOff)).setChecked(alarms[position].isAlarmOn());
 
         TextView titleTextView = listItemView.findViewById(R.id.alarmTitle);
         TextView repeatTextView = listItemView.findViewById(R.id.alarmInfo);
