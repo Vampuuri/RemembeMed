@@ -3,8 +3,11 @@ package fi.esupponen.remembemed.classes;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import fi.esupponen.remembemed.classes.Alarm;
-
+/**
+ * @author Essi Supponen [essi.supponen@tuni.fi]
+ * @version 2019-04-23
+ * @since 1.8
+ */
 public class Medication implements Serializable {
 
     /**
