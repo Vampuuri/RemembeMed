@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -109,35 +110,39 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
     public void addAlarm(int hours, int minutes, double repeatAfterHour, String dose) {
         Log.d("MedicineActivity", hours + ":" + minutes + " repeat: " + repeatAfterHour + " Dose: " + dose);
 
-        Alarm alarm = new Alarm(hours, minutes, (float)repeatAfterHour, true, dose);
-        medication.getAlarms().add(alarm);
-
-        AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-
-        Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("medName", medication.getName());
-        intent.putExtra("medDose", alarm.getDose());
-        intent.setAction("" + Math.random());
-
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, alarm.getId(), intent, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, alarm.getHour());
-        calendar.set(Calendar.MINUTE, alarm.getMinute());
-
-        if (repeatAfterHour == 0) {
-            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
+        if (dose == null ||dose.equals("")) {
+            Toast.makeText(this, "Dose cannot be empty, please try again", Toast.LENGTH_LONG).show();
         } else {
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
+            Alarm alarm = new Alarm(hours, minutes, (float)repeatAfterHour, true, dose);
+            medication.getAlarms().add(alarm);
+
+            AlarmManager manager = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
+            Intent intent = new Intent(this, AlarmReceiver.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("medName", medication.getName());
+            intent.putExtra("medDose", alarm.getDose());
+            intent.setAction("" + Math.random());
+
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, alarm.getId(), intent, 0);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, alarm.getHour());
+            calendar.set(Calendar.MINUTE, alarm.getMinute());
+
+            if (repeatAfterHour == 0) {
+                manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
+            } else {
+                manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),1000 * 60 * (long)repeatAfterHour, alarmIntent);
+            }
+
+            showAlarms();
+
+            Intent broadcastIntent = new Intent("modify-data");
+            broadcastIntent.putExtra("request", MedicationRequest.ADD_ALARM);
+            broadcastIntent.putExtra("index", index);
+            broadcastIntent.putExtra("alarm", alarm);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
         }
-
-        showAlarms();
-
-        Intent broadcastIntent = new Intent("modify-data");
-        broadcastIntent.putExtra("request", MedicationRequest.ADD_ALARM);
-        broadcastIntent.putExtra("index", index);
-        broadcastIntent.putExtra("alarm", alarm);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 }
