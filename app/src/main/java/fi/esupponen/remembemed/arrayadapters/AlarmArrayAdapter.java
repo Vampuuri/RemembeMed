@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -36,8 +37,8 @@ public class AlarmArrayAdapter extends ArrayAdapter {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View listItemView = layoutInflater.inflate(R.layout.list_alarmitem, null, true);
 
-        ((RadioButton)listItemView.findViewById(R.id.buttonOnOff)).setChecked(alarms[position].isAlarmOn());
-        ((RadioButton)listItemView.findViewById(R.id.buttonOnOff)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        ((CheckBox)listItemView.findViewById(R.id.buttonOnOff)).setChecked(alarms[position].isAlarmOn());
+        ((CheckBox)listItemView.findViewById(R.id.buttonOnOff)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
