@@ -32,8 +32,6 @@ public class EditDialogFragment extends DialogFragment {
 
         if (request.equals(MedicationRequest.CHANGE_NAME)) {
             args.putString("field", "name");
-        } else if (request.equals(MedicationRequest.CHANGE_DOSE)) {
-            args.putString("field", "dose");
         }
 
         frag.setArguments(args);
