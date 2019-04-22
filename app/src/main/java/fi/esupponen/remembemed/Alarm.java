@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Alarm implements Serializable {
-    public static LinkedList<Integer> allIds = new LinkedList<>();
+    public static LinkedList<Integer> ALL_IDS = new LinkedList<>();
 
     int id;
     int hour;
@@ -21,13 +21,13 @@ public class Alarm implements Serializable {
         this.alarmOn = alarmOn;
         this.dose = dose;
 
-        this.id = (int)(Math.random()*10000);
+        this.id = (int)(Math.random()*100000);
 
-        while (allIds.contains(Integer.valueOf(this.id))) {
-            this.id = (int)(Math.random()*10000);
+        while (ALL_IDS.contains(Integer.valueOf(this.id))) {
+            this.id = (int)(Math.random()*100000);
         }
 
-        allIds.add(Integer.valueOf(this.id));
+        ALL_IDS.add(Integer.valueOf(this.id));
     }
 
     public Alarm(int id, int hour, int minute, float hourToRepeat, boolean alarmOn, String dose) {
@@ -37,17 +37,17 @@ public class Alarm implements Serializable {
         this.alarmOn = alarmOn;
         this.dose = dose;
 
-        if (allIds.contains(Integer.valueOf(id))) {
-            this.id = (int)(Math.random()*10000);
+        if (ALL_IDS.contains(Integer.valueOf(id))) {
+            this.id = (int)(Math.random()*100000);
 
-            while (allIds.contains(Integer.valueOf(this.id))) {
-                this.id = (int)(Math.random()*10000);
+            while (ALL_IDS.contains(Integer.valueOf(this.id))) {
+                this.id = (int)(Math.random()*100000);
             }
         } else {
             this.id = id;
         }
 
-        allIds.add(Integer.valueOf(this.id));
+        ALL_IDS.add(Integer.valueOf(this.id));
     }
 
     public int getHour() {
