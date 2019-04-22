@@ -184,4 +184,9 @@ public class MedicineActivity extends AppCompatActivity implements EditDialogFra
 
         showAlarms();
     }
+
+    @Override
+    public void setTakenAlarm(int position, boolean taken) {
+        System.out.println(position + " " + taken);
+    }
 }
