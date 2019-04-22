@@ -35,44 +35,94 @@ import fi.esupponen.remembemed.dialogfragments.NewMedicationDialogFragment;
  * @since 1.8
  */
 public class MainActivity extends AppCompatActivity implements NewMedicationDialogFragment.NewMedicationFragmentListener {
+    /**
+     * All medications in a list.
+     */
     private ArrayList<Medication> medications;
 
+    /**
+     * BroadcastReceiver for local broadcasts to update info in json-file.
+     */
     private BroadcastReceiver modifyDataReceiver;
 
+    /**
+     * Update data in given index of medications.
+     *
+     * @param index         of medication in list
+     * @param updatedData   updated data
+     */
     public void updateData(int index, Medication updatedData) {
+        // set new data
         medications.get(index).setName(updatedData.getName());
 
+        // Save to file
         writeJsonFile();
         refreshListView();
     }
 
+    /**
+     * Delete data in given index of medications.
+     *
+     * @param index     of medication in list
+     */
     public void deleteData(int index) {
+        // Delete data
         medications.remove(index);
 
+        // Update to file
         writeJsonFile();
         refreshListView();
     }
 
+    /**
+     * Adds alarm to medication in given index.
+     *
+     * @param index     of medication in list
+     * @param alarm
+     */
     public void addAlarmToMedication(int index, Alarm alarm) {
         medications.get(index).getAlarms().add(alarm);
         writeJsonFile();
     }
 
+    /**
+     * Remove alarm in given index from medication in given index.
+     *
+     * @param medicationIndex
+     * @param alarmIndex
+     */
     public void removeAlarmFromMedication(int medicationIndex, int alarmIndex) {
         medications.get(medicationIndex).getAlarms().remove(alarmIndex);
         writeJsonFile();
     }
 
+    /**
+     * Set taken to alarm in given index of medication in given index.
+     *
+     * @param medicationIndex
+     * @param alarmIndex
+     * @param taken
+     */
     public void setTakenDose(int medicationIndex, int alarmIndex, boolean taken) {
         medications.get(medicationIndex).getAlarms().get(alarmIndex).setTaken(taken);
         writeJsonFile();
     }
 
+    /**
+     * Set alarm activity in given index of medicatino in given index.
+     *
+     * @param medicationIndex
+     * @param alarmIndex
+     * @param active
+     */
     public void setAlarmActive(int medicationIndex, int alarmIndex, boolean active) {
         medications.get(medicationIndex).getAlarms().get(alarmIndex).setAlarmOn(active);
         writeJsonFile();
     }
 
+    /**
+     * Registers broadcastreceiver for updating data.
+     */
     private void registerModifyDataReceiver() {
         modifyDataReceiver = new BroadcastReceiver() {
             @Override
@@ -83,22 +133,27 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
                     Medication medication = (Medication) intent.getExtras().getSerializable("medication");
                     int index = intent.getExtras().getInt("index");
                     updateData(index, medication);
+
                 } else if (request.equals(MedicationRequest.DELETE)) {
                     int index = intent.getExtras().getInt("index");
                     deleteData(index);
+
                 } else if (request.equals(MedicationRequest.ADD_ALARM)) {
                     Alarm alarm = (Alarm) intent.getExtras().getSerializable("alarm");
                     int index = intent.getExtras().getInt("index");
                     addAlarmToMedication(index, alarm);
+
                 } else if (request.equals(MedicationRequest.REMOVE_ALARM)) {
                     int medIndex = intent.getExtras().getInt("medicationIndex");
                     int alarmIndex = intent.getExtras().getInt("alarmIndex");
                     removeAlarmFromMedication(medIndex, alarmIndex);
+
                 } else if (request.equals(MedicationRequest.SET_TAKEN)) {
                     int medIndex = intent.getExtras().getInt("medicationIndex");
                     int alarmIndex = intent.getExtras().getInt("alarmIndex");
                     boolean taken = intent.getExtras().getBoolean("taken");
                     setTakenDose(medIndex, alarmIndex, taken);
+
                 } else if (request.equals(MedicationRequest.SET_ALARM_ACTIVE)) {
                     int medIndex = intent.getExtras().getInt("medicationIndex");
                     int alarmIndex = intent.getExtras().getInt("alarmIndex");
@@ -111,6 +166,11 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         LocalBroadcastManager.getInstance(this).registerReceiver(modifyDataReceiver, new IntentFilter("modify-data"));
     }
 
+    /**
+     * Creates MainActivity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         medications = new ArrayList<>();
@@ -118,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Set OnClickListener to ListView
         ListView list = (ListView) findViewById(R.id.listView);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -126,24 +187,37 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
             }
         });
 
+        // register datareceiver
         registerModifyDataReceiver();
 
+        // read data from file
         readInfoFromFile();
         refreshListView();
     }
 
+    /**
+     * Refreshes ListView onResume.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         refreshListView();
     }
 
+    /**
+     * Unregisters receiver before destruction.
+     */
     @Override
     protected void onDestroy() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(modifyDataReceiver);
         super.onDestroy();
     }
 
+    /**
+     * Starts MedicationActivity with medication in given position in list.
+     *
+     * @param position
+     */
     public void toMedicationInfo(int position) {
         Intent intent = new Intent(this, MedicineActivity.class);
         intent.putExtra("medication", medications.get(position));
@@ -151,6 +225,9 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         startActivity(intent);
     }
 
+    /**
+     * Updates ListView.
+     */
     private void refreshListView() {
         Medication[] medicationsArray = new Medication[medications.size()];
 
@@ -163,11 +240,22 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         list.setAdapter(arrayAdapter);
     }
 
+    /**
+     * Opens NewMedicationDialog.
+     *
+     * @param v     Add new medication -button
+     */
     public void addNewMedication(View v) {
         NewMedicationDialogFragment dialog = new NewMedicationDialogFragment();
         dialog.show(getFragmentManager(), "newMedicationDialog");
     }
 
+    /**
+     * Reads saved info from file.
+     *
+     * Goes trough JsonString from file. Finds medications and alarms and saves them to medication
+     * list.
+     */
     public void readInfoFromFile() {
         String jsonString = readJsonStringFromFile();
 
@@ -205,6 +293,11 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         }
     }
 
+    /**
+     * Opens file and reads data.
+     *
+     * @return String of json from file
+     */
     public String readJsonStringFromFile() {
         Writer writer = new StringWriter();
 
@@ -225,6 +318,9 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         return writer.toString();
     }
 
+    /**
+     * Creates JsonObject of data and saves it to file.
+     */
     public void writeJsonFile() {
         JSONObject jsonObject = makeJsonObject();
 
@@ -247,6 +343,11 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         }
     }
 
+    /**
+     * Creates JsonObject of medication data in application.
+     *
+     * @return JsonObject of all data
+     */
     public JSONObject makeJsonObject() {
         JSONObject jsonObject = new JSONObject();
 
@@ -284,16 +385,24 @@ public class MainActivity extends AppCompatActivity implements NewMedicationDial
         return jsonObject;
     }
 
+    /**
+     * Adds new medication with given name. Redirects user to MedicineActivity of new medication.
+     *
+     * @param name
+     */
     @Override
     public void addNewMedication(String name) {
         if (name == null || name.equals("")) {
+            // Show toast if name was empty
             Toast.makeText(this, "Cannot create medication with empty name. Please try again", Toast.LENGTH_LONG).show();
         } else {
+            // Create new Medication object and save it.
             Medication newMed = new Medication(name);
             medications.add(newMed);
             writeJsonFile();
             refreshListView();
 
+            // Start MedicineActivity of newly created Medication.
             Intent intent = new Intent(this, MedicineActivity.class);
             intent.putExtra("medication", newMed);
             intent.putExtra("index", medications.size()-1);
